@@ -3,9 +3,9 @@ package com.solvd.navigator.domain;
 public class House {
 
     private Long id;
-    private Integer number;
+    private Long number;
     private String block;
-    private String numberOfEntrances;
+    private Long numberOfEntrances;
     private String description;
 
     public Long getId() {
@@ -16,14 +16,6 @@ public class House {
         this.id = id;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
     public String getBlock() {
         return block;
     }
@@ -32,11 +24,19 @@ public class House {
         this.block = block;
     }
 
-    public String getNumberOfEntrances() {
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Long getNumberOfEntrances() {
         return numberOfEntrances;
     }
 
-    public void setNumberOfEntrances(String numberOfEntrances) {
+    public void setNumberOfEntrances(Long numberOfEntrances) {
         this.numberOfEntrances = numberOfEntrances;
     }
 
