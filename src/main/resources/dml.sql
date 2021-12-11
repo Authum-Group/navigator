@@ -29,7 +29,7 @@ INSERT INTO Districts(city_id, name) VALUES
 (3, "Leninskiy district"),
 (4, "Central'niy district"),
 (5, "Partizanskiy district");
-SELECT * FROM Districts;
+
 INSERT INTO Streets(name) VALUES
 ("Yakyba Kolasa"),
 ("Yanki Kupali"),
@@ -51,7 +51,7 @@ INSERT INTO Point_types(type) VALUES
 ("Public place"),
 ("Road"),
 ("Unknown location");
-SELECT * FROM Point_types;
+
 INSERT INTO Coordinates(latitude, longitude) VALUES
 (53.902738, 27.573555),
 (53.924148, 27.613308),
@@ -63,18 +63,53 @@ INSERT INTO Coordinates(latitude, longitude) VALUES
 (52.427148, 31.013167),
 (52.965395, 29.784252),
 (52.919461, 30.916097);
-SELECT * FROM Coordinates;
+
 INSERT INTO Points(district_id, coordinate_id, point_type_id, name) VALUES
 (2, 1, 3, "Gorky park"),
 (3, 2, 1, "Chelyuskintsev Park"),
 (2, 3, 3, "Nemiga"),
 (4, 4, 3, "Brest Fortress"),
 (5, 5, 5, "A temple in honor of the establishment of the cross of the lord"),
-(7, 6, 4, "Road"),
-(1, 7, 3, "Church"),
+(7, 6, 4, "Road number 9"),
+(1, 7, 3, "Church saint Piotr"),
 (6, 8, 2, "Sight"),
 (5, 9, 2, "House"),
 (2, 2, 3, "Town hall");
+
+INSERT INTO Houses(street_id, number, block, number_of_entrances) VALUES
+(2, 5, 2, 10),
+(1, 2, 1, 8),
+(5, 35, 1, 15),
+(3, 12, 5, 3),
+(4, 10, 1, 1);
+
+INSERT INTO Point_points(point_id, available_point_id) VALUES
+(1, 2),
+(1, 3),
+(1, 10),
+(2, 1),
+(2, 3),
+(3, 1),
+(3, 2),
+(4, 5),
+(4, 10),
+(4, 7),
+(5, 4),
+(5, 6),
+(5, 9),
+(6, 8),
+(6, 9),
+(7, 2),
+(7, 10),
+(8, 7),
+(8, 1),
+(9,10),
+(9, 6),
+(10, 9),
+(10, 4),
+(10, 1);
+
+
 
 
 

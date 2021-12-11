@@ -74,7 +74,7 @@ id SERIAL,
 district_id BIGINT UNSIGNED NOT NULL,
 coordinate_id BIGINT UNSIGNED NOT NULL,
 point_type_id BIGINT UNSIGNED NOT NULL,
-name VARCHAR(50) NOT NULL,
+name TEXT NOT NULL,
 PRIMARY KEY(id),
 CONSTRAINT fk_points_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
 ON UPDATE NO ACTION
@@ -99,6 +99,20 @@ CONSTRAINT fk_houses_street_id FOREIGN KEY(street_id) REFERENCES Streets(id)
 ON UPDATE NO ACTION
 ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS Point_points(
+id SERIAL,
+point_id BIGINT UNSIGNED NOT NULL,
+available_point_id BIGINT UNSIGNED NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_point_points_point_id FOREIGN KEY(point_id) REFERENCES Points(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE,
+CONSTRAINT fk_point_points_available_point_id FOREIGN KEY(available_point_id) REFERENCES Points(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
 
 
 
