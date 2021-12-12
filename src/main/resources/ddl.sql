@@ -1,0 +1,160 @@
+CREATE DATABASE IF NOT EXISTS Country;
+USE Country;
+
+CREATE TABLE IF NOT EXISTS Countries(
+id SERIAL,
+name VARCHAR(20) NOT NULL UNIQUE,
+PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS Regions(
+id SERIAL,
+country_id BIGINT UNSIGNED NOT NULL,
+name VARCHAR(30) NOT NULL UNIQUE,
+PRIMARY KEY(id),
+CONSTRAINT fk_regions_country_id FOREIGN KEY(country_id) REFERENCES Countries(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Cities(
+id SERIAL,
+region_id BIGINT UNSIGNED NOT NULL,
+name VARCHAR(30) NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_cities_region_id FOREIGN KEY(region_id) REFERENCES Regions(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Districts(
+id SERIAL,
+city_id BIGINT UNSIGNED NOT NULL,
+name VARCHAR(30) NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_districts_city_id FOREIGN KEY(city_id) REFERENCES Cities(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Streets(
+id SERIAL,
+name VARCHAR(50) NOT NULL,
+PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS Street_districts(
+id SERIAL,
+street_id BIGINT UNSIGNED NOT NULL,
+district_id BIGINT UNSIGNED NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_street_districts_street_id FOREIGN KEY(street_id) REFERENCES Streets(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE,
+CONSTRAINT fk_street_districts_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+); 
+
+CREATE TABLE IF NOT EXISTS Point_types(
+id SERIAL,
+type VARCHAR(50) NOT NULL UNIQUE,
+PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS Coordinates(
+id SERIAL,
+latitude DOUBLE NOT NULL,
+longitude DOUBLE NOT NULL,
+PRIMARY KEY(id)
+);
+
+CREATE TABLE IF NOT EXISTS Points(
+id SERIAL,
+district_id BIGINT UNSIGNED NOT NULL,
+coordinate_id BIGINT UNSIGNED NOT NULL,
+point_type_id BIGINT UNSIGNED NOT NULL,
+name TEXT NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_points_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE,
+CONSTRAINT fk_points_coordinate_id FOREIGN KEY(coordinate_id) REFERENCES Coordinates(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE,
+CONSTRAINT fk_points_point_type_id FOREIGN KEY(point_type_id) REFERENCES Point_types(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Houses(
+id SERIAL,
+street_id BIGINT UNSIGNED NOT NULL,
+number BIGINT NOT NULL,
+block VARCHAR(5) NULL,
+number_of_entrances BIGINT NULL,
+description TEXT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_houses_street_id FOREIGN KEY(street_id) REFERENCES Streets(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Point_points(
+id SERIAL,
+point_id BIGINT UNSIGNED NOT NULL,
+available_point_id BIGINT UNSIGNED NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT fk_point_points_point_id FOREIGN KEY(point_id) REFERENCES Points(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE,
+CONSTRAINT fk_point_points_available_point_id FOREIGN KEY(available_point_id) REFERENCES Points(id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
