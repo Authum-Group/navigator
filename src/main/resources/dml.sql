@@ -45,13 +45,6 @@ INSERT INTO Street_districts(street_id, district_id) VALUES
 (5, 4),
 (4, 5);
 
-INSERT INTO Point_types(type) VALUES
-("Bus stop"),
-("Residential building"),
-("Public place"),
-("Road"),
-("Unknown location");
-
 INSERT INTO Coordinates(latitude, longitude) VALUES
 (53.902738, 27.573555),
 (53.924148, 27.613308),
@@ -64,17 +57,17 @@ INSERT INTO Coordinates(latitude, longitude) VALUES
 (52.965395, 29.784252),
 (52.919461, 30.916097);
 
-INSERT INTO Points(district_id, coordinate_id, point_type_id, name) VALUES
-(2, 1, 3, "Gorky park"),
-(3, 2, 1, "Chelyuskintsev Park"),
-(2, 3, 3, "Nemiga"),
-(4, 4, 3, "Brest Fortress"),
-(5, 5, 5, "A temple in honor of the establishment of the cross of the lord"),
-(7, 6, 4, "Road number 9"),
-(1, 7, 3, "Church saint Piotr"),
-(6, 8, 2, "Sight"),
-(5, 9, 2, "House"),
-(2, 2, 3, "Town hall");
+INSERT INTO Points(district_id, coordinate_id, name, type) VALUES
+(2, 1, "Gorky park", "Public place"),
+(3, 2, "Chelyuskintsev Park", "Public place"),
+(2, 3, "Nemiga", "Bus stop"),
+(4, 4, "Brest Fortress", "Public place"),
+(5, 5, "A temple in honor of the establishment of the cross of the lord", "Public place"),
+(7, 6, "Road number 9", "Road"),
+(1, 7, "Church saint Piotr", "Public place"),
+(6, 8, "Sight", "Public place"),
+(5, 9, "House", "Residential building"),
+(2, 2, "Town hall", "Public place");
 
 INSERT INTO Houses(street_id, number, block, number_of_entrances) VALUES
 (2, 5, 2, 10),
