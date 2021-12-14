@@ -45,9 +45,9 @@
         <result property="name" column="district_name"/>
         <association property="city" column="city_id"
                      resultMap="com.solvd.navigator.persistence.CityRepository.CityResultMap"/>
-        <collection property="points" javaType="ArrayList"
+        <collection property="points" javaType="java.util.ArrayList"
                     resultMap="com.solvd.navigator.persistence.PointRepository.PointResultMap"/>
-        <collection property="streets" javaType="ArrayList"
+        <collection property="streets" javaType="java.util.ArrayList"
                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
     </resultMap>
 

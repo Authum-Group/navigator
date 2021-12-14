@@ -47,14 +47,14 @@
     <resultMap id="PointResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">
         <id property="id" column="point_id"/>
         <result property="name" column="point_name"/>
-        <result property="type" column="point_type"/> <!--или association type-->
+        <result property="type" column="point_type"/>
         <association property="district" column="district_id"
                      resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
         <association property="street" column="street_id"
-                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/> ?????
+                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
         <association property="coordinate" column="coordinate_id"
                      resultMap="com.solvd.navigator.persistence.CoordinateRepository.CoordinateResultMap"/>
-
+        <!--<collection property="availablePoints" javaType="java.util.HashMap" ... -->
         <!-- мапа -->
 
     </resultMap>

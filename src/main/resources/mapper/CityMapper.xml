@@ -55,7 +55,7 @@
         <result property="name" column="city_name"/>
         <association property="region" column="region_id"
                      resultMap="com.solvd.navigator.persistence.RegionRepository.RegionResultMap"/>
-        <collection property="districts" javaType="ArrayList"
+        <collection property="districts" javaType="java.util.ArrayList"
                     resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
     </resultMap>
 

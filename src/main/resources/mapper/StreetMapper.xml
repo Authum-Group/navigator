@@ -45,7 +45,7 @@
     <resultMap id="StreetResultMap" type="com.solvd.navigator.domain.Street" autoMapping="false">
         <id property="id" column="street_id"/>
         <result property="name" column="street_name"/>
-        <collection property="houses" javaType="ArrayList" resultMap="com.solvd.navigator.persistence.HouseRepository.HouseResultMap"/>
+        <collection property="houses" javaType="java.lang.ArrayList" resultMap="com.solvd.navigator.persistence.HouseRepository.HouseResultMap"/>
     </resultMap>
 
 </mapper>

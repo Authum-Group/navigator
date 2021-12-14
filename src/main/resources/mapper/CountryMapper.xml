@@ -25,7 +25,7 @@
     <select id="findById" parameterType="java.lang.Long" resultMap="CountryResultMap">
         select
         <include refid="countryColumns"/>
-        from Country c
+        from Countries c
         where c.id = #{id};
     </select>
 
@@ -42,9 +42,10 @@
     <resultMap id="CountryResultMap" type="com.solvd.navigator.domain.Country" autoMapping="false">
         <id property="id" column="country_id"/>
         <result property="name" column="country_name"/>
-        <collection property="regions" javaType="ArrayList"
+        <collection property="regions" javaType="java.util.ArrayList"
                     resultMap="com.solvd.navigator.persistence.RegionRepository.RegionResultMap"/>
     </resultMap>
 
 </mapper>
+
 
