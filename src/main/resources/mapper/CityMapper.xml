@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.CityRepository">
+
+    <sql id="cityColumns">
+        ci.id as city_id,
+        ci.region_id as region_id,
+        ci.name as city_name
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Cities(region_id, name) VALUES (#{region.id}, #{name});
+    </insert>
+
+    <select id="findAll" resultMap="CityResultMap">
+        select
+        <include refid="cityColumns"/>,
+
+                ТЕКСТ ТЕКСТ
+
+        h.id as house_id,
+        h.number as house_number,
+        h.block as house_block,
+        h.number_of_entrances as house_entrance
+        from Cities ci
+        left join Districts d
+        on ci.id = d.city_id
+            ТАБЛИЦА СВЯЗКА УЛИЦЫ РАЙОНЫ
+        left join Houses h
+        on
+        st.id = h.street_id;
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="CityResultMap">
+        select
+        <include refid="cityColumns"/>
+        from Cities ci
+        where ci.id = #{id};
+    </select>
+
+    <update id="update" parameterType="City">
+        update Cities set
+        region_id = #{region.id},
+        name = #{name}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Cities where id = #{id};
+    </delete>
+
+    <resultMap id="CityResultMap" type="com.solvd.navigator.domain.City" autoMapping="false">
+        <id property="id" column="city_id"/>
+        <result property="name" column="city_name"/>
+        <association property="region" column="region_id"
+                     resultMap="com.solvd.navigator.persistence.RegionRepository.RegionResultMap"/>
+        <collection property="districts" javaType="ArrayList"
+                    resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
+    </resultMap>
+
+</mapper>

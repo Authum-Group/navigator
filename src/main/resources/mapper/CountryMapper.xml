@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.CountryRepository">
+
+    <sql id="countryColumns">
+        c.id as country_id,
+        c.name as country_name
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Countries(name) VALUES (#{name});
+    </insert>
+
+    <select id="findAll" resultMap="CountryResultMap">
+        select
+        c.id as country_id,
+        c.name as country_name,
+
+        ТЕКСТ ТЕКСТ ТЕКСТ
+
+       ;
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="CountryResultMap">
+        select
+        <include refid="countryColumns"/>
+        from Country c
+        where c.id = #{id};
+    </select>
+
+    <update id="update" parameterType="Country">
+        update Countries set
+        name = #{name}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Countries where id = #{id};
+    </delete>
+
+    <resultMap id="CountryResultMap" type="com.solvd.navigator.domain.Country" autoMapping="false">
+        <id property="id" column="country_id"/>
+        <result property="name" column="country_name"/>
+        <collection property="regions" javaType="ArrayList"
+                    resultMap="com.solvd.navigator.persistence.RegionRepository.RegionResultMap"/>
+    </resultMap>
+
+</mapper>
+

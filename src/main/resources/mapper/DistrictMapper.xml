@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.DistrictRepository">
+
+    <sql id="districtColumns">
+        d.id as district_id,
+        d.city_id as city_id,
+        d.name as district_name
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Districts(city_id, name) VALUES (#{city.id}, #{name})
+    </insert>
+
+    <select id="findAll" resultMap="DistrictResultMap">
+        select
+        <include refid="districtColumns"/>,
+
+        ТЕКСТ ТЕКСТ
+
+            ;
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="DistrictResultMap">
+        select
+        <include refid="districtColumns"/>
+        from Districts d
+        where d.id = #{id};
+    </select>
+
+    <update id="update" parameterType="District">
+        update Districts set
+        city_id = #{city.id},
+        name = #{name}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Districts where id = #{id};
+    </delete>
+
+    <resultMap id="DistrictResultMap" type="com.solvd.navigator.domain.District" autoMapping="false">
+        <id property="id" column="district_id"/>
+        <result property="name" column="district_name"/>
+        <association property="city" column="city_id"
+                     resultMap="com.solvd.navigator.persistence.CityRepository.CityResultMap"/>
+        <collection property="points" javaType="ArrayList"
+                    resultMap="com.solvd.navigator.persistence.PointRepository.PointResultMap"/>
+        <collection property="streets" javaType="ArrayList"
+                    resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
+    </resultMap>
+
+</mapper>

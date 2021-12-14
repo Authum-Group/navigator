@@ -6,7 +6,7 @@ public class House {
     private Long number;
     private String block;
     private Long numberOfEntrances;
-    private String description;
+
 
     public Long getId() {
         return id;
@@ -38,13 +38,5 @@ public class House {
 
     public void setNumberOfEntrances(Long numberOfEntrances) {
         this.numberOfEntrances = numberOfEntrances;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

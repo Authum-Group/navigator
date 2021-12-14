@@ -1,13 +1,17 @@
 package com.solvd.navigator.persistence;
 
-import com.solvd.navigator.domain.Street;
+import org.apache.ibatis.annotations.Param;
 
 public interface StreetDistrictRepository {
 
-    void create(Street street);
+    void create(@Param("streetId") Long streetId, @Param("districtId") Long districtId);
 
-    void update(Street street);
+    void update(@Param("streetId") Long streetId, @Param("districtId") Long districtId);
 
-    void delete(Street street);
+    void delete(@Param("streetId") Long streetId, @Param("districtId") Long districtId);
+
+    //    List<Region> findAll();
+    //
+    //    Region findById(Long id);
 
 }

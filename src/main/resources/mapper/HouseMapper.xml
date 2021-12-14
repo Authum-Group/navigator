@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.HouseRepository">
+
+    <sql id="houseColumns">
+        h.id as house_id,
+        h.street_id as street_id,
+        h.number as house_number,
+        h.block as house_block,
+        h.number_of_entrances as house_entrance
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Houses(street_id, number, block, number_of_entrances)
+        VALUES (#{street.id}, #{number}, #{block}, #{numberOfEntrances});
+    </insert>
+
+    <select id="findAll" resultMap="HouseResultMap">
+        select
+        <include refid="houseColumns"/>
+        from Houses h;
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="HouseResultMap">
+        select
+        <include refid="houseColumns"/>
+        from Houses h
+        where id = #{id};
+    </select>
+
+    <update id="update" parameterType="House">
+        update Houses set
+        street_id = #{street.id},
+        number = #{number},
+        block = #{block},
+        number_of_entrances = #{numberOfEntrances}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Houses where id = #{id};
+    </delete>
+
+    <resultMap id="HouseResultMap" type="com.solvd.navigator.domain.House" autoMapping="false">
+        <id property="id" column="house_id"/>
+        <result property="number" column="house_number"/>
+        <result property="block" column="house_block"/>
+        <result property="numberOfEntrances" column="house_entrance"/>
+        <association property="street" column="street_id"
+                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.PointRepository">
+
+    <sql id="pointColumns">
+        p.id as point_id,
+        p.district_id as district_id,
+        p.coordinate_id as coordinate_id,
+        p.name as point_name
+        p.type as point_type
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Points(district_id, coordinate_id, name, type)
+        VALUES (#{district.id}, #{coordinate.id}, #{name}, #{type});
+    </insert>
+
+    <select id="findAll" resultMap="PointResultMap">
+        select
+        <include refid="pointColumns"/>,
+
+        ТЕКСТ ТЕКСТ ТЕКСТ
+        ;
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="PointResultMap">
+        select
+        <include refid="pointColumns"/>
+        from Points p
+        where p.id = #{id};
+    </select>
+
+    <update id="update" parameterType="Point">
+        update Points set
+        district_id = #{district.id},
+        coordinate_id = #{coordinate.id},
+        name = #{name},
+        type = #{type}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Points where id = #{id};
+    </delete>
+
+    <resultMap id="PointResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">
+        <id property="id" column="point_id"/>
+        <result property="name" column="point_name"/>
+        <result property="type" column="point_type"/> <!--или association type-->
+        <association property="district" column="district_id"
+                     resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
+        <association property="street" column="street_id"
+                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/> ?????
+        <association property="coordinate" column="coordinate_id"
+                     resultMap="com.solvd.navigator.persistence.CoordinateRepository.CoordinateResultMap"/>
+
+        <!-- мапа -->
+
+    </resultMap>
+
+</mapper>
+
+

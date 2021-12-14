@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.solvd.navigator.persistence.StreetDistrictRepository"> ??????????????????????????????????
+
+    <sql id="streetDistrictColumns">
+        std.id as street_districts_id,
+        std.street_id as street_id,
+        std.district_id as district_id
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Street_districts(street_id, district_id) VALUES (#{streetId}, #{districtId});
+    </insert>
+
+    <select id="findAll" resultMap="StreetResultMap">
+        select
+
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="StreetResultMap">
+        select
+        <include refid="streetColumns"/>
+        from Streets st
+        where st.id = #{id};
+    </select>
+
+    <update id="update"> ?????????????????????????????
+        update Street_districts set
+        street_id = #{streetId},
+        district_id = #{districtId}
+        where id = #{id};
+    </update>
+
+    <delete id="delete"> ????????????????????????????????
+        delete from Street_districts where id = #{id};
+    </delete>
+
+
+
+</mapper>
