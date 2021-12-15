@@ -39,22 +39,13 @@ ON DELETE CASCADE
 
 CREATE TABLE IF NOT EXISTS Streets(
 id SERIAL,
-name VARCHAR(50) NOT NULL,
-PRIMARY KEY(id)
-);
-
-CREATE TABLE IF NOT EXISTS Street_districts(
-id SERIAL,
-street_id BIGINT UNSIGNED NOT NULL,
 district_id BIGINT UNSIGNED NOT NULL,
+name VARCHAR(50) NOT NULL,
 PRIMARY KEY(id),
-CONSTRAINT fk_street_districts_street_id FOREIGN KEY(street_id) REFERENCES Streets(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE,
-CONSTRAINT fk_street_districts_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
+CONSTRAINT fk_streets_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
 ON UPDATE NO ACTION
 ON DELETE CASCADE
-); 
+);
 
 CREATE TABLE IF NOT EXISTS Coordinates(
 id SERIAL,

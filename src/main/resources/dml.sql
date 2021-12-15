@@ -30,20 +30,12 @@ INSERT INTO Districts(city_id, name) VALUES
 (4, "Central'niy district"),
 (5, "Partizanskiy district");
 
-INSERT INTO Streets(name) VALUES
-("Yakyba Kolasa"),
-("Yanki Kupali"),
-("Maksima Bagdanovicha"),
-("Simona Muziki"),
-("Franciska Skoriny");
-
-INSERT INTO Street_districts(street_id, district_id) VALUES
-(2, 1),
-(3, 2),
-(4, 1),
-(1, 3),
-(5, 4),
-(4, 5);
+INSERT INTO Streets(district_id, name) VALUES
+(1, "Yakyba Kolasa"),
+(2, "Yanki Kupali"),
+(3, "Maksima Bagdanovicha"),
+(7, "Simona Muziki"),
+(5, "Franciska Skoriny");
 
 INSERT INTO Coordinates(latitude, longitude) VALUES
 (53.902738, 27.573555),
