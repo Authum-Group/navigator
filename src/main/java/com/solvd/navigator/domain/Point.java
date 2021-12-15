@@ -10,8 +10,28 @@ public class Point {
     private District district;
     private Street street;
     private Coordinate coordinate;
-    private PointType type;
+    private Type type;
     Map<Point, Double> availablePoints = new HashMap<>();
+
+    public enum Type {
+
+        BUS_STOP("Bus stop"),
+        RESIDENTIAL_BUILDING("Residential building"),
+        PUBLIC_PLACE("Public place"),
+        ROAD("Road"),
+        UNKNOWN_LOCATION("Unknown location");
+
+        public String getTitle() {
+            return title;
+        }
+
+        private final String title;
+
+        Type(String title) {
+            this.title = title;
+        }
+
+    }
 
     public Long getId() {
         return id;
@@ -21,11 +41,11 @@ public class Point {
         this.id = id;
     }
 
-    public PointType getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(PointType type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

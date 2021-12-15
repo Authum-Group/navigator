@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.StreetRepository">
+
+    <sql id="streetColumns">
+        st.id as street_id,
+        st.name as street_name
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO Streets(name) VALUES (#{name});
+    </insert>
+
+    <select id="findAll" resultMap="StreetResultMap">
+        select
+        <include refid="streetColumns"/>,
+        h.id as house_id,
+        h.number as house_number,
+        h.block as house_block,
+        h.number_of_entrances as house_entrance
+        from Streets st
+        left join Houses h
+        on
+        st.id = h.street_id;
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="StreetResultMap">
+        select
+        <include refid="streetColumns"/>
+        from Streets st
+        where st.id = #{id};
+    </select>
+
+    <update id="update" parameterType="Street">
+        update Streets set
+        name = #{name}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Streets where id = #{id};
+    </delete>
+
+    <resultMap id="StreetResultMap" type="com.solvd.navigator.domain.Street" autoMapping="false">
+        <id property="id" column="street_id"/>
+        <result property="name" column="street_name"/>
+        <collection property="houses" javaType="java.lang.ArrayList" resultMap="com.solvd.navigator.persistence.HouseRepository.HouseResultMap"/>
+    </resultMap>
+
+</mapper>
