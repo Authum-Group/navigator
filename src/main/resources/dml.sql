@@ -1,98 +1,135 @@
-USE Country;
+use country;
 
-INSERT INTO Countries(name) VALUES
-("Belarus"),
-("Spain"),
-("Great Britain"),
-("Japan");
+insert into Countries(name) values ("belarus");
 
-INSERT INTO Regions(country_id, name) VALUES
-(1, "Mogilev region"),
-(1, "Brest region"),
-(1, "Minsk region"),
-(1, "Gomel region"),
-(1, "Grodno region"),
-(1, "Vitebsk region");
+insert into Regions(country_id, name) values
+(1, "mogilev"),
+(1, "brest"),
+(1, "minsk"),
+(1, "gomel"),
+(1, "grodno"),
+(1, "vitebsk");
 
-INSERT INTO Cities(region_id, name) VALUES
-(3, "Minsk"),
-(2, "Pinsk"),
-(2, "Luninets"),
-(5, "Grodno"),
-(6, "Vitebsk");
+insert into Cities(region_id, name) values
+(3, "minsk"),
+(2, "pinsk"),
+(2, "luninets"),
+(5, "grodno"),
+(6, "vitebsk");
 
-INSERT INTO Districts(city_id, name) VALUES
-(1, "Zavodskoy district"),
-(1, "Central'niy district"),
-(1, "Moscovskiy district"),
-(2, "Pervomayskiy district"),
-(3, "Leninskiy district"),
-(4, "Central'niy district"),
-(5, "Partizanskiy district");
+insert into Districts(city_id, name) values
+(1, "zavodskoy"),
+(1, "central'niy"),
+(1, "moscovskiy"),
+(2, "pervomayskiy"),
+(3, "leninskiy"),
+(4, "central'niy"),
+(5, "partizanskiy"),
+(5, "oktyabrskiy");
 
-INSERT INTO Streets(district_id, name) VALUES
-(1, "Yakyba Kolasa"),
-(2, "Yanki Kupali"),
-(3, "Maksima Bagdanovicha"),
-(7, "Simona Muziki"),
-(5, "Franciska Skoriny");
+insert into Streets(district_id, name) values
+(13, "yakyba kolasa"),
+(10, "yanki kupali"),
+(12, "maksima bagdanovicha"),
+(11, "simona muziki"),
+(14, "franciska skoriny"),
+(15, "nezavisimosti"),
+(16, "zamkovaya"),
+(9, "lenina"),
+(14, "osvoboditeley"),
+(13, "pekinskaya");
+SELECT * FROM Point_types;
+insert into Point_types(type) values
+("bus stop"),
+("residential building"),
+("public place"),
+("road"),
+("unknown location");
 
-INSERT INTO Coordinates(latitude, longitude) VALUES
-(53.902738, 27.573555),
-(53.924148, 27.613308),
-(53.902236, 27.549848),
-(52.083315, 23.659570),
-(52.244799, 26.795678),
-(52.746566, 24.115057),
-(53.694239, 26.869446),
-(52.427148, 31.013167),
-(52.965395, 29.784252),
-(52.919461, 30.916097);
+insert into Points(name, latitude, longitude, street_id, type_id, description) values
+("gorky park", 53.902738, 27.573555, 11, 5, null),
+("chelyuskintsev park", 53.924148, 27.613308, 12, 4, null),
+("nemiga", 53.924148, 27.613308, 13, 3, null),
+("brest fortress", 52.083315, 23.659570, 14, 2, null),
+("a temple in honor of the establishment of the cross of the lord", 52.913461, 30.916097, 15, 1, null),
+("road number 9", 52.919561, 35.916097, 16, 2, null),
+("church saint piotr", 52.919461, 34.916097, 20, 3, null),
+("sight", 50.919461, 33.916097, 13, 4, null),
+("house", 49.919461, 32.916097, 14, 5, null),
+("town hall", 48.919461, 31.916097, 15, 5, null),
+("mir castle",  53.451111, 26.472777, 16, 3, null),
+("nesvizh castle", 53.224367, 26.689889, 17, 3, null),
+("saint varvara church", 53.467381, 26.024960, 14, 3, null),
+("vitebsk tawn hall", 55.195551, 30.205944, 18, 5, null),
+("ozarichi", 52.46478, 29.25694, 20, 5, null),
+("trostenec", 53.865515, 27.712640, 19, 1, null),
+("national republic library", 53.931320, 27.646262, 11, 3, null),
+("national park braslav", 55.723055, 27.052777, 17, 5, null),
+("gas station gazpromneft", 54.019405, 28.209226, 13, 4, null),
+("mound of glory", 54.018611, 27.898311, 14, 3, null),
+("grand opera",  53.910618, 27.561706, 11, 3, null),
+("pina river", 52.154708, 26.194847, 15, 5, null),
+("old castle", 53.677201, 23.823201, 16, 3, null),
+("lower castle", 55.488046, 28.764561, 17, 5, null),
+("great stone",  53.903317, 27.976425, 11, 2, "industrial park"),
+("minsk arena", 53.936066, 27.481646, 19, 2, "stadium");
 
-INSERT INTO Points(district_id, coordinate_id, name, type) VALUES
-(2, 1, "Gorky park", "Public place"),
-(3, 2, "Chelyuskintsev Park", "Public place"),
-(2, 3, "Nemiga", "Bus stop"),
-(4, 4, "Brest Fortress", "Public place"),
-(5, 5, "A temple in honor of the establishment of the cross of the lord", "Public place"),
-(7, 6, "Road number 9", "Road"),
-(1, 7, "Church saint Piotr", "Public place"),
-(6, 8, "Sight", "Public place"),
-(5, 9, "House", "Residential building"),
-(2, 2, "Town hall", "Public place");
+insert into Transitions(point_from_id, point_to_id) values
+(61, 72),
+(61, 53),
+(71, 60),
+(62, 71),
+(72, 53),
+(53, 71),
+(53, 72),
+(54, 55),
+(54, 60),
+(74, 77),
+(75, 74),
+(65, 66),
+(55, 59),
+(56, 58),
+(66, 69),
+(77, 72),
+(67, 70),
+(78, 77),
+(68, 61),
+(69,70),
+(59, 56),
+(60, 69),
+(70, 73),
+(60, 71),
+(71, 67),
+(62, 61),
+(62, 63),
+(62, 66),
+(63, 55),
+(73, 70),
+(53, 59),
+(64, 68),
+(74, 56),
+(65, 68),
+(56, 59),
+(66, 60),
+(76, 71),
+(67, 70),
+(68, 67),
+(69, 61),
+(59, 58),
+(70, 66),
+(60, 53),
+(60, 58),
+(61, 69),
+(71, 68),
+(72, 70),
+(62, 64),
+(63, 62),
+(73, 64),
+(55, 61),
+(65, 61),
+(75, 60),
+(66, 71);
 
-INSERT INTO Houses(street_id, number, block, number_of_entrances) VALUES
-(2, 5, 2, 10),
-(1, 2, 1, 8),
-(5, 35, 1, 15),
-(3, 12, 5, 3),
-(4, 10, 1, 1);
-
-INSERT INTO Point_points(point_id, available_point_id) VALUES
-(1, 2),
-(1, 3),
-(1, 10),
-(2, 1),
-(2, 3),
-(3, 1),
-(3, 2),
-(4, 5),
-(4, 10),
-(4, 7),
-(5, 4),
-(5, 6),
-(5, 9),
-(6, 8),
-(6, 9),
-(7, 2),
-(7, 10),
-(8, 7),
-(8, 1),
-(9,10),
-(9, 6),
-(10, 9),
-(10, 4),
-(10, 1);
 
 
 

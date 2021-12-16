@@ -1,141 +1,84 @@
-CREATE DATABASE IF NOT EXISTS Country;
-USE Country;
+create database if not exists Country;
+use Country;
 
-CREATE TABLE IF NOT EXISTS Countries(
-id SERIAL,
-name VARCHAR(20) NOT NULL UNIQUE,
-PRIMARY KEY(id)
+create table if not exists Countries(
+id serial,
+name varchar(45) not null unique,
+primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS Regions(
-id SERIAL,
-country_id BIGINT UNSIGNED NOT NULL,
-name VARCHAR(30) NOT NULL UNIQUE,
-PRIMARY KEY(id),
-CONSTRAINT fk_regions_country_id FOREIGN KEY(country_id) REFERENCES Countries(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
+create table if not exists Regions(
+id serial,
+country_id bigint unsigned not null,
+name varchar(45) not null unique,
+primary key(id),
+constraint fk_regions_country_id foreign key(country_id) references Countries(id)
+on update no action
+on delete cascade
 );
 
-CREATE TABLE IF NOT EXISTS Cities(
-id SERIAL,
-region_id BIGINT UNSIGNED NOT NULL,
-name VARCHAR(30) NOT NULL,
-PRIMARY KEY(id),
-CONSTRAINT fk_cities_region_id FOREIGN KEY(region_id) REFERENCES Regions(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
+create table if not exists Cities(
+id serial,
+region_id bigint unsigned not null,
+name varchar(45) not null,
+primary key(id),
+constraint fk_cities_region_id foreign key(region_id) references Regions(id)
+on update no action
+on delete cascade
 );
 
-CREATE TABLE IF NOT EXISTS Districts(
-id SERIAL,
-city_id BIGINT UNSIGNED NOT NULL,
-name VARCHAR(30) NOT NULL,
-PRIMARY KEY(id),
-CONSTRAINT fk_districts_city_id FOREIGN KEY(city_id) REFERENCES Cities(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
+create table if not exists Districts(
+id serial,
+city_id bigint unsigned not null,
+name varchar(45) not null,
+primary key(id),
+constraint fk_districts_city_id foreign key(city_id) references Cities(id)
+on update no action
+on delete cascade
 );
 
-CREATE TABLE IF NOT EXISTS Streets(
-id SERIAL,
-district_id BIGINT UNSIGNED NOT NULL,
-name VARCHAR(50) NOT NULL,
-PRIMARY KEY(id),
-CONSTRAINT fk_streets_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
+create table if not exists Streets(
+id serial,
+district_id bigint unsigned not null,
+name varchar(150) not null,
+primary key(id),
+constraint fk_streets_district_id foreign key(district_id) references Districts(id)
+on update no action
+on delete cascade
 );
 
-CREATE TABLE IF NOT EXISTS Coordinates(
-id SERIAL,
-latitude DOUBLE NOT NULL,
-longitude DOUBLE NOT NULL,
-PRIMARY KEY(id)
+create table if not exists Point_types(
+id serial,
+type varchar(50) not null unique,
+primary key(id)
 );
 
-CREATE TABLE IF NOT EXISTS Points(
-id SERIAL,
-district_id BIGINT UNSIGNED NOT NULL,
-coordinate_id BIGINT UNSIGNED NOT NULL,
-name TEXT NOT NULL,
-type VARCHAR(25) NOT NULL,
-PRIMARY KEY(id),
-CONSTRAINT fk_points_district_id FOREIGN KEY(district_id) REFERENCES Districts(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE,
-CONSTRAINT fk_points_coordinate_id FOREIGN KEY(coordinate_id) REFERENCES Coordinates(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
+create table if not exists Points(
+id serial,
+name varchar(150) not null,
+latitude double not null,
+longitude double not null,
+description text,
+street_id bigint unsigned not null,
+type_id bigint unsigned not null,
+primary key(id),
+constraint fk_points_street_id foreign key(street_id) references Streets(id)
+on update no action
+on delete cascade,
+constraint fk_points_type_id foreign key(type_id) references Point_types(id)
+on update no action
+on delete cascade
 );
 
-CREATE TABLE IF NOT EXISTS Houses(
-id SERIAL,
-street_id BIGINT UNSIGNED NOT NULL,
-number BIGINT NOT NULL,
-block VARCHAR(5) NULL,
-number_of_entrances BIGINT NULL,
-PRIMARY KEY(id),
-CONSTRAINT fk_houses_street_id FOREIGN KEY(street_id) REFERENCES Streets(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
+create table if not exists Transitions(
+id serial,
+point_from_id bigint unsigned not null,
+point_to_id bigint unsigned not null,
+primary key(id),
+constraint fk_transitions_point_from_id foreign key(point_from_id) references Points(id)
+on update no action
+on delete cascade,
+constraint fk_transitions_point_to_id foreign key(point_to_id) references Points(id)
+on update no action
+on delete cascade
 );
-
-CREATE TABLE IF NOT EXISTS Point_points(
-id SERIAL,
-point_id BIGINT UNSIGNED NOT NULL,
-available_point_id BIGINT UNSIGNED NOT NULL,
-PRIMARY KEY(id),
-CONSTRAINT fk_point_points_point_id FOREIGN KEY(point_id) REFERENCES Points(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE,
-CONSTRAINT fk_point_points_available_point_id FOREIGN KEY(available_point_id) REFERENCES Points(id)
-ON UPDATE NO ACTION
-ON DELETE CASCADE
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
