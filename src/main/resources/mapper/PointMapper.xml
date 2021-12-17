@@ -4,39 +4,57 @@
 <mapper namespace="com.solvd.navigator.persistence.PointRepository">
 
     <sql id="pointColumns">
-        p.id as point_id,
-        p.district_id as district_id,
-        p.coordinate_id as coordinate_id,
-        p.name as point_name
-        p.type as point_type
+        point.id as point_id,
+        point.name as point_name,
+        point.latitude as latitude,
+        point.longitude as longitude,
+        point.street_id as street_id,
+        point.type_id as type_id,
+        point.description as point_description
     </sql>
 
     <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO Points(district_id, coordinate_id, name, type)
-        VALUES (#{district.id}, #{coordinate.id}, #{name}, #{type});
+        insert into Points(name, latitude, longitude, street_id, type_id, description)
+        values (#{name}, #{latitude}, #{longitude}, #{street.id} ,#{type.id}, #{description});
     </insert>
 
     <select id="findAll" resultMap="PointResultMap">
         select
         <include refid="pointColumns"/>,
-
-        ТЕКСТ ТЕКСТ ТЕКСТ
-        ;
+        <include refid="com.solvd.navigator.persistence.StreetRepository.streetColumns"/>,
+        <include refid="com.solvd.navigator.persistence.PointTypeRepository.pointTypeColumns"/>
+        from Points point
+        left join
+        Streets street
+        on point.street_id = street.id
+        left join
+        Point_types type
+        on point.type_id = type.id;
     </select>
 
     <select id="findById" parameterType="java.lang.Long" resultMap="PointResultMap">
         select
-        <include refid="pointColumns"/>
-        from Points p
-        where p.id = #{id};
+        <include refid="pointColumns"/>,
+        <include refid="com.solvd.navigator.persistence.StreetRepository.streetColumns"/>,
+        <include refid="com.solvd.navigator.persistence.PointTypeRepository.pointTypeColumns"/>
+        from Points point
+        left join
+        Streets street
+        on point.street_id = street.id
+        left join
+        Point_types type
+        on point.type_id = type.id
+        where point.id = #{id};
     </select>
 
     <update id="update" parameterType="Point">
         update Points set
-        district_id = #{district.id},
-        coordinate_id = #{coordinate.id},
         name = #{name},
-        type = #{type}
+        latitude = #{latitude},
+        longitude = #{longitude},
+        street_id = #{street.id},
+        type_id = #{type.id},
+        description = #{description}
         where id = #{id};
     </update>
 
@@ -47,18 +65,13 @@
     <resultMap id="PointResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">
         <id property="id" column="point_id"/>
         <result property="name" column="point_name"/>
-        <result property="type" column="point_type"/>
-        <association property="district" column="district_id"
-                     resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="description" column="point_description"/>
         <association property="street" column="street_id"
                      resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
-        <association property="coordinate" column="coordinate_id"
-                     resultMap="com.solvd.navigator.persistence.CoordinateRepository.CoordinateResultMap"/>
-        <!--<collection property="availablePoints" javaType="java.util.HashMap" ... -->
-        <!-- мапа -->
+        <association property="type" column="type_id"
+                     resultMap="com.solvd.navigator.persistence.PointTypeRepository.PointTypeResultMap"/>
 
     </resultMap>
-
 </mapper>
-
-

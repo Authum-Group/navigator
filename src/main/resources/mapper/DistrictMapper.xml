@@ -4,29 +4,35 @@
 <mapper namespace="com.solvd.navigator.persistence.DistrictRepository">
 
     <sql id="districtColumns">
-        d.id as district_id,
-        d.city_id as city_id,
-        d.name as district_name
+        district.id as district_id,
+        district.city_id as city_id,
+        district.name as district_name
     </sql>
 
     <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO Districts(city_id, name) VALUES (#{city.id}, #{name})
+        insert into Districts(city_id, name) values (#{city.id}, #{name})
     </insert>
 
     <select id="findAll" resultMap="DistrictResultMap">
         select
         <include refid="districtColumns"/>,
-
-        ТЕКСТ ТЕКСТ
-
-            ;
+        <include refid="com.solvd.navigator.persistence.CityRepository.cityColumns"/>
+        from Districts district
+        left join
+        Cities city
+        on district.city_id = city.id;
     </select>
 
     <select id="findById" parameterType="java.lang.Long" resultMap="DistrictResultMap">
         select
-        <include refid="districtColumns"/>
-        from Districts d
-        where d.id = #{id};
+        <include refid="districtColumns"/>,
+        <include refid="com.solvd.navigator.persistence.CityRepository.cityColumns"/>
+        from Districts district
+        left join
+        Cities city
+        on district.city_id = city.id;
+        where
+        district.id = #{id};
     </select>
 
     <update id="update" parameterType="District">
@@ -45,10 +51,6 @@
         <result property="name" column="district_name"/>
         <association property="city" column="city_id"
                      resultMap="com.solvd.navigator.persistence.CityRepository.CityResultMap"/>
-        <collection property="points" javaType="java.util.ArrayList"
-                    resultMap="com.solvd.navigator.persistence.PointRepository.PointResultMap"/>
-        <collection property="streets" javaType="java.util.ArrayList"
-                    resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
     </resultMap>
 
 </mapper>

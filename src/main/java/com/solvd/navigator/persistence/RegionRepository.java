@@ -15,5 +15,4 @@ public interface RegionRepository {
     void update(Region region);
 
     void delete(Region region);
-
 }

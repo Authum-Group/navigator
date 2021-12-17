@@ -15,5 +15,4 @@ public interface CityRepository {
     void update(City city);
 
     void delete(City city);
-
 }

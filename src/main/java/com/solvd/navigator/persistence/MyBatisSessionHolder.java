@@ -10,26 +10,20 @@ import java.io.InputStream;
 public class MyBatisSessionHolder {
 
     private static final String CONFIG_FILE_NAME = "mybatis-config.xml";
-    private static final SqlSessionFactory SQL_SESSION_FACTORY;
-
-    static {
-        SQL_SESSION_FACTORY = buildSessionFactory();
-    }
+    private static final SqlSessionFactory SQL_SESSION_FACTORY = buildSessionFactory();
 
     private static SqlSessionFactory buildSessionFactory() {
         InputStream inputStream;
         try {
             inputStream = Resources.getResourceAsStream(CONFIG_FILE_NAME);
         } catch (IOException ex) {
-            throw new RuntimeException("Unable to prepare mybatis config", ex);
+            throw new RuntimeException("Unable to prepare mybatis config", ex); // TODO Our own exception
         }
-        SqlSessionFactoryBuilder builder =
-                new SqlSessionFactoryBuilder();
+        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         return builder.build(inputStream);
     }
 
     public static SqlSessionFactory getSqlSessionFactory() {
         return SQL_SESSION_FACTORY;
     }
-
 }

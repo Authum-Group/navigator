@@ -15,5 +15,4 @@ public interface StreetRepository {
     void update(Street street);
 
     void delete(Street street);
-
 }

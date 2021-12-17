@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-public class StreetMyBatisRepository implements StreetRepository {
+public class StreetRepositoryMyBatisImpl implements StreetRepository {
 
     @Override
     public void create(Street street) {

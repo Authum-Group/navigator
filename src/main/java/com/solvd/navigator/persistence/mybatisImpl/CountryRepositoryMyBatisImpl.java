@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-public class CountryMyBatisRepository implements CountryRepository {
+public class CountryRepositoryMyBatisImpl implements CountryRepository {
 
     @Override
     public void create(Country country) {
