@@ -5,11 +5,12 @@
 
     <sql id="streetColumns">
         st.id as street_id,
+        st.district_id as district_id,
         st.name as street_name
     </sql>
 
     <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO Streets(name) VALUES (#{name});
+        INSERT INTO Streets(district_id, name) VALUES (#{district.id}, #{name});
     </insert>
 
     <select id="findAll" resultMap="StreetResultMap">
@@ -34,6 +35,7 @@
 
     <update id="update" parameterType="Street">
         update Streets set
+        district_id = #{district.id},
         name = #{name}
         where id = #{id};
     </update>

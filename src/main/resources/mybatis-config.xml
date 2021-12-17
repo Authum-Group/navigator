@@ -23,6 +23,5 @@
         <mapper resource="mapper/RegionMapper.xml"/>
         <mapper resource="mapper/CoordinateMapper.xml"/>
         <mapper resource="mapper/StreetMapper.xml"/>
-        <mapper resource="mapper/StreetDistrictMapper.xml"/>
     </mappers>
 </configuration>
