@@ -9,6 +9,14 @@ public class Region {
     private Country country;
     private List<City> cities;
 
+    public Region() {
+    }
+
+    public Region(String name, Country country) {
+        this.name = name;
+        this.country = country;
+    }
+
     public Long getId() {
         return id;
     }

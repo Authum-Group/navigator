@@ -2,9 +2,9 @@ package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.City;
 import com.solvd.navigator.domain.District;
+import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.ValidationException;
 import com.solvd.navigator.persistence.CityRepository;
 import com.solvd.navigator.persistence.mybatisImpl.CityRepositoryMyBatisImpl;
 import com.solvd.navigator.service.CityService;
@@ -20,12 +20,12 @@ public class CityServiceImpl implements CityService {
     private static final String exceptionStub = "Exception when try to %s City - %s";
 
     @Override
-    public void create(City city) throws InvalidParametersException, ValidationException {
+    public void create(City city) throws InvalidParametersException, EntityIsNotValidException {
         if (city == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "city's object is null"));
         }
         if (!isValid(city)) {
-            throw new ValidationException(String.format(exceptionStub, "create", "city's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "city's object is not valid"));
         }
         city.setId(null);
         CITY_REPOSITORY.create(city);
@@ -68,7 +68,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void update(City city) throws InvalidParametersException, ValidationException, ResourceNotFoundException {
+    public void update(City city) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (city == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "city's object is null"));
         }
@@ -76,7 +76,7 @@ public class CityServiceImpl implements CityService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "city's id is null"));
         }
         if (!isValid(city)) {
-            throw new ValidationException(String.format(exceptionStub, "update", "city's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "city's object is not valid"));
         }
         findById(city.getId()); // TODO Change way to check object in db
         CITY_REPOSITORY.update(city);

@@ -9,6 +9,14 @@ public class City {
     private Region region;
     private List<District> districts;
 
+    public City() {
+    }
+
+    public City(String name, Region region) {
+        this.name = name;
+        this.region = region;
+    }
+
     public Long getId() {
         return id;
     }

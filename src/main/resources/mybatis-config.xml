@@ -30,7 +30,7 @@
         <mapper resource="mapper/CityMapper.xml"/>
         <mapper resource="mapper/DistrictMapper.xml"/>
         <mapper resource="mapper/PointMapper.xml"/>
-        <mapper resource="mapper/PointType.xml"/>
+        <mapper resource="mapper/PointTypeMapper.xml"/>
         <mapper resource="mapper/RegionMapper.xml"/>
         <mapper resource="mapper/TransitionMapper.xml"/>
         <mapper resource="mapper/StreetMapper.xml"/>

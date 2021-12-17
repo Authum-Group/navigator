@@ -2,9 +2,9 @@ package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.Point;
 import com.solvd.navigator.domain.Street;
+import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.ValidationException;
 import com.solvd.navigator.persistence.StreetRepository;
 import com.solvd.navigator.persistence.mybatisImpl.StreetRepositoryMyBatisImpl;
 import com.solvd.navigator.service.PointService;
@@ -20,12 +20,12 @@ public class StreetServiceImpl implements StreetService {
     private static final String exceptionStub = "Exception when try to %s Street - %s";
 
     @Override
-    public void create(Street street) throws InvalidParametersException, ValidationException {
+    public void create(Street street) throws InvalidParametersException, EntityIsNotValidException {
         if (street == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "street's object is null"));
         }
         if (!isValid(street)) {
-            throw new ValidationException(String.format(exceptionStub, "create", "street's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "street's object is not valid"));
         }
         street.setId(null);
         STREET_REPOSITORY.create(street);
@@ -69,7 +69,7 @@ public class StreetServiceImpl implements StreetService {
     }
 
     @Override
-    public void update(Street street) throws InvalidParametersException, ValidationException, ResourceNotFoundException {
+    public void update(Street street) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (street == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "street's object is null"));
         }
@@ -77,7 +77,7 @@ public class StreetServiceImpl implements StreetService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "street's id is null"));
         }
         if (!isValid(street)) {
-            throw new ValidationException(String.format(exceptionStub, "update", "street's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "street's object is not valid"));
         }
         findById(street.getId()); // TODO Change way to check object in db
         STREET_REPOSITORY.update(street);

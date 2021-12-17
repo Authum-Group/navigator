@@ -6,6 +6,14 @@ public class Transition {
     private Point from;
     private Point to;
 
+    public Transition(Point from, Point to) {
+        this.from = from;
+        this.to = to;
+    }
+
+    public Transition() {
+    }
+
     public Long getId() {
         return id;
     }

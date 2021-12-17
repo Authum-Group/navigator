@@ -9,6 +9,14 @@ public class Street {
     private District district;
     private List<Point> points;
 
+    public Street() {
+    }
+
+    public Street(String name, District district) {
+        this.name = name;
+        this.district = district;
+    }
+
     public Long getId() {
         return id;
     }

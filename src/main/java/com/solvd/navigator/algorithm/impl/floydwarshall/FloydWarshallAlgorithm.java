@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class FloydWarshallAlgorithm implements ShortestPathAlgorithm {
 
-    PairNodesMatrix matrix;
+    private PairNodesMatrix matrix;
 
     public FloydWarshallAlgorithm(List<Point> countryNodes) {
         matrix = new PairNodesMatrix(countryNodes);
@@ -32,6 +32,7 @@ public class FloydWarshallAlgorithm implements ShortestPathAlgorithm {
         if (matrix.getAbility(i, j) == -1) {
             return Optional.empty();
         }
+        path.add(matrix.getNodeByIndex(i));
         while (i != j) {
             i = matrix.getAbility(i, j);
             path.add(matrix.getNodeByIndex(i));

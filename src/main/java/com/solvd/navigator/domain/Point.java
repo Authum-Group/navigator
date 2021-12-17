@@ -1,20 +1,30 @@
 package com.solvd.navigator.domain;
 
-import org.apache.ibatis.annotations.MapKey;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Point {
 
     private Long id;
-    private String name; // Дом, подъезд, участок - пофиг
+    private String name;
     private Double latitude;
     private Double longitude;
     private Street street;
     private PointType type;
     private String description;
     Map<Point, Double> availablePoints = new HashMap<>();
+
+    public Point() {
+    }
+
+    public Point(String name, Double latitude, Double longitude, Street street, PointType type, String description) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.street = street;
+        this.type = type;
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
