@@ -4,8 +4,6 @@ import com.solvd.navigator.domain.*;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.domain.exception.ValidationException;
-import com.solvd.navigator.persistence.PointTypeRepository;
-import com.solvd.navigator.persistence.mybatisImpl.PointTypeRepositoryMyBatisImpl;
 import com.solvd.navigator.service.*;
 import com.solvd.navigator.service.impl.*;
 import org.apache.logging.log4j.LogManager;
@@ -195,20 +193,20 @@ public class Main {
             /**
              *  PointType CRUD
              */
-/*            PointTypeRepository pointTypeRepository = new PointTypeRepositoryMyBatisImpl();
+            PointTypeService pointTypeService = new PointTypeServiceImpl();
             pointTypes.stream()
                     .forEach(pointType -> {
-                        pointTypeRepository.create(pointType);
+                        pointTypeService.create(pointType);
                     });
 
-            List<PointType> allPointTypes = pointTypeRepository.findAll();
+            List<PointType> allPointTypes = pointTypeService.findAll();
 
-            PointType onePointType = pointTypeRepository.findById(allPointTypes.get(1).getId());
+            PointType onePointType = pointTypeService.findById(allPointTypes.get(1).getId());
 
             onePointType.setName("MODIFIED");
 
-            pointTypeRepository.update(onePointType);
-            //pointTypeRepository.delete(onePointType);*/
+            pointTypeService.update(onePointType);
+            //pointTypeService.delete(onePointType);
 
             /**
              *  Point CRUD
@@ -257,8 +255,6 @@ public class Main {
         } catch (ValidationException | InvalidParametersException | ResourceNotFoundException ex) {
             LOGGER.error(ex);
         }
-
-        System.out.println("Zhopa");
 
     }
 
