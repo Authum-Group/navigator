@@ -89,4 +89,9 @@ public class Point {
     public void setAvailablePoints(Map<Point, Double> availablePoints) {
         this.availablePoints = availablePoints;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s. Type - %s", street.getName(), this.name, this.type.getName());
+    }
 }

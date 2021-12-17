@@ -48,4 +48,9 @@ public class Street {
     public void setPoints(List<Point> points) {
         this.points = points;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", district.getName(), this.name);
+    }
 }

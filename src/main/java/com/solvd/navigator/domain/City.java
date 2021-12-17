@@ -48,4 +48,9 @@ public class City {
     public void setDistricts(List<District> districts) {
         this.districts = districts;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", region.getName(), this.name);
+    }
 }

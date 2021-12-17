@@ -38,4 +38,9 @@ public class Country {
     public void setRegions(List<Region> regions) {
         this.regions = regions;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s", this.name);
+    }
 }

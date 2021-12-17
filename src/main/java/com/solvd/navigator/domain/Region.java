@@ -48,4 +48,9 @@ public class Region {
     public void setCities(List<City> cities) {
         this.cities = cities;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", country.getName(), this.name);
+    }
 }

@@ -8,19 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Матрица инцидентности для алгоритма
- * Хранит в себе 2 матрицы:
- * distanceBetweenNodes - содержит расстояние от одного узла до другого
- * abilitiesBetweenNodes - содержит дубликат индекса точки-получателя,
- * либо -1, если это невозможно
- */
 public class PairNodesMatrix {
 
     private Integer sideSize;
     private List<Point> nodes;
-    private Double[][] costs;           // Расстояния между узлами или 0
-    private Integer[][] abilities;      // Возможность перехода между узлами (номер узла назначения) либо -1
+    private Double[][] costs;
+    private Integer[][] abilities;
 
     public PairNodesMatrix(List<Point> nodes) {
         this.nodes = Collections.unmodifiableList(nodes);
@@ -29,7 +22,6 @@ public class PairNodesMatrix {
         countIndirectCosts();
     }
 
-    // OK
     private void initializeCosts() {
         sideSize = nodes.size();
         costs = new Double[sideSize][sideSize];
@@ -47,7 +39,6 @@ public class PairNodesMatrix {
         }
     }
 
-    // OK
     private void initializeAbilities() {
         abilities = new Integer[sideSize][sideSize];
 
@@ -58,7 +49,6 @@ public class PairNodesMatrix {
         }
     }
 
-    // OK (вроде)
     public void countIndirectCosts() {
         for (int k = 0; k < sideSize; k++) {
             for (int a = 0; a < sideSize; a++) {
@@ -96,5 +86,9 @@ public class PairNodesMatrix {
 
     public Point getNodeByIndex(Integer index) {
         return this.nodes.get(index);
+    }
+
+    public List<Point> getNodes() {
+        return nodes;
     }
 }
