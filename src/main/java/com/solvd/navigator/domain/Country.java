@@ -8,6 +8,13 @@ public class Country {
     private String name;
     private List<Region> regions;
 
+    public Country() {
+    }
+
+    public Country(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -30,5 +37,10 @@ public class Country {
 
     public void setRegions(List<Region> regions) {
         this.regions = regions;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s", this.name);
     }
 }

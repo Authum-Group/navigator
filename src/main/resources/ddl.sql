@@ -1,11 +1,13 @@
-create database if not exists Country;
-use Country;
+create database if not exists navigator;
+use navigator;
 
 create table if not exists Countries(
 id serial,
 name varchar(45) not null unique,
 primary key(id)
 );
+ALTER TABLE Countries AUTO_INCREMENT=1;
+
 
 create table if not exists Regions(
 id serial,
@@ -16,6 +18,7 @@ constraint fk_regions_country_id foreign key(country_id) references Countries(id
 on update no action
 on delete cascade
 );
+ALTER TABLE Regions AUTO_INCREMENT=1;
 
 create table if not exists Cities(
 id serial,
@@ -26,6 +29,7 @@ constraint fk_cities_region_id foreign key(region_id) references Regions(id)
 on update no action
 on delete cascade
 );
+ALTER TABLE Cities AUTO_INCREMENT=1;
 
 create table if not exists Districts(
 id serial,
@@ -36,6 +40,7 @@ constraint fk_districts_city_id foreign key(city_id) references Cities(id)
 on update no action
 on delete cascade
 );
+ALTER TABLE Districts AUTO_INCREMENT=1;
 
 create table if not exists Streets(
 id serial,
@@ -46,12 +51,14 @@ constraint fk_streets_district_id foreign key(district_id) references Districts(
 on update no action
 on delete cascade
 );
+ALTER TABLE Streets AUTO_INCREMENT=1;
 
 create table if not exists Point_types(
 id serial,
 name varchar(50) not null unique,
 primary key(id)
 );
+ALTER TABLE Point_types AUTO_INCREMENT=1;
 
 create table if not exists Points(
 id serial,
@@ -69,6 +76,7 @@ constraint fk_points_type_id foreign key(type_id) references Point_types(id)
 on update no action
 on delete cascade
 );
+ALTER TABLE Points AUTO_INCREMENT=1;
 
 create table if not exists Transitions(
 id serial,
@@ -82,3 +90,4 @@ constraint fk_transitions_point_to_id foreign key(point_to_id) references Points
 on update no action
 on delete cascade
 );
+ALTER TABLE Transitions AUTO_INCREMENT=1;

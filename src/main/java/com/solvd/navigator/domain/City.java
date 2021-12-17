@@ -9,6 +9,14 @@ public class City {
     private Region region;
     private List<District> districts;
 
+    public City() {
+    }
+
+    public City(String name, Region region) {
+        this.name = name;
+        this.region = region;
+    }
+
     public Long getId() {
         return id;
     }
@@ -39,5 +47,10 @@ public class City {
 
     public void setDistricts(List<District> districts) {
         this.districts = districts;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", region.getName(), this.name);
     }
 }

@@ -2,40 +2,39 @@ package com.solvd.navigator.algorithm.impl.floydwarshall;
 
 import com.solvd.navigator.domain.Point;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-/**
- * Матрица инцидентности для алгоритма
- * Хранит в себе 2 матрицы:
- * distanceBetweenNodes - содержит расстояние от одного узла до другого
- * abilitiesBetweenNodes - содержит дубликат индекса точки-получателя,
- * либо -1, если это невозможно
- */
 public class PairNodesMatrix {
 
     private Integer sideSize;
     private List<Point> nodes;
-    private Double[][] costs;           // Расстояния между узлами или 0
-    private Integer[][] abilities;      // Возможность перехода между узлами (номер узла назначения) либо -1
+    private Double[][] costs;
+    private Integer[][] abilities;
 
     public PairNodesMatrix(List<Point> nodes) {
         this.nodes = Collections.unmodifiableList(nodes);
         initializeCosts();
         initializeAbilities();
+        countIndirectCosts();
     }
 
     private void initializeCosts() {
         sideSize = nodes.size();
         costs = new Double[sideSize][sideSize];
-        for (int row = 0; row < sideSize - 1; row++) {
+        for (int i = 0; i < costs.length; i++) {
+            Arrays.fill(costs[i], (double) -1);
+        }
+        List<Long> nodeIds = nodes.stream().map(node -> node.getId()).collect(Collectors.toList());
+        for (int row = 0; row < sideSize; row++) {
             Map<Point, Double> adjancedNodes = nodes.get(row).getAvailablePoints();
             for (Point node : adjancedNodes.keySet()) {
-                if (nodes.contains(node)) {
-                    int col = this.nodes.indexOf(node);
-                    costs[row][col] = (col == -1 || row == col) ? 0 : adjancedNodes.get(node);
-                }
+                int col = nodeIds.indexOf(node.getId());
+                costs[row][col] = (col == -1 || row == col) ? 0 : adjancedNodes.get(node);
+
             }
         }
     }
@@ -51,18 +50,18 @@ public class PairNodesMatrix {
     }
 
     public void countIndirectCosts() {
-        for (int indirectIndex = 0; indirectIndex < sideSize; indirectIndex++) {
-            for (int fromIndex = 0; fromIndex < sideSize; fromIndex++) {
-                for (int toIndex = 0; fromIndex < sideSize; fromIndex++) {
-                    if (costs[fromIndex][indirectIndex] == 0) {
+        for (int k = 0; k < sideSize; k++) {
+            for (int a = 0; a < sideSize; a++) {
+                for (int b = 0; b < sideSize; b++) {
+                    if (costs[a][k] <= 0 || costs[k][b] <= 0 || a == b) {
                         continue;
                     }
-                    Double fromToIndirectCost = this.costs[fromIndex][indirectIndex];
-                    Double indirectToToCost = this.costs[indirectIndex][toIndex];
-                    Double indirectCost = fromToIndirectCost + indirectToToCost;
-                    if (indirectCost < this.costs[fromIndex][toIndex]) {
-                        this.costs[fromIndex][toIndex] = indirectCost;
-                        this.abilities[fromIndex][toIndex] = this.abilities[fromIndex][indirectIndex];
+                    Double akCost = this.costs[a][k];
+                    Double kbCost = this.costs[k][b];
+                    Double kCost = akCost + kbCost;
+                    if (this.costs[a][b] < 0 || kCost < this.costs[a][b]) { //TODO check
+                        this.costs[a][b] = kCost;
+                        this.abilities[a][b] = this.abilities[a][k];
                     }
                 }
             }
@@ -87,5 +86,9 @@ public class PairNodesMatrix {
 
     public Point getNodeByIndex(Integer index) {
         return this.nodes.get(index);
+    }
+
+    public List<Point> getNodes() {
+        return nodes;
     }
 }

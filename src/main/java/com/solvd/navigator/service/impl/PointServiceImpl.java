@@ -2,9 +2,9 @@ package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.Point;
 import com.solvd.navigator.domain.Transition;
+import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.ValidationException;
 import com.solvd.navigator.persistence.PointRepository;
 import com.solvd.navigator.persistence.mybatisImpl.PointRepositoryMyBatisImpl;
 import com.solvd.navigator.service.PointService;
@@ -23,12 +23,12 @@ public class PointServiceImpl implements PointService {
     private static String exeptionStub = "Exception when try to %s Point - %s";
 
     @Override
-    public void create(Point point) throws ValidationException, InvalidParametersException {
+    public void create(Point point) throws EntityIsNotValidException, InvalidParametersException {
         if (point == null) {
             throw new InvalidParametersException("Exception when try to create Point - object is null");
         }
         if (!isValid(point)) {
-            throw new ValidationException("Exception when try to create Point - object is not valid");
+            throw new EntityIsNotValidException("Exception when try to create Point - object is not valid");
         }
         point.setId(null);
         POINT_REPOSITORY.create(point);
@@ -43,7 +43,6 @@ public class PointServiceImpl implements PointService {
 
         //TODO Simplify
         List<Transition> transitions = TRANSITION_SERVICE.findAll();
-
         for (Point point : points) {
             List<Transition> ourTransitions = transitions.stream().filter(transition -> {
                 return transition.getFrom().getId().equals(point.getId());
@@ -100,7 +99,7 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public void update(Point point) throws InvalidParametersException, ResourceNotFoundException, ValidationException {
+    public void update(Point point) throws InvalidParametersException, ResourceNotFoundException, EntityIsNotValidException {
         if (point == null) {
             throw new InvalidParametersException("Exception when try to update Point - object is null");
         }
@@ -110,7 +109,7 @@ public class PointServiceImpl implements PointService {
         findById(point.getId());
 
         if (!isValid(point)) {
-            throw new ValidationException("Exception when try to update Point - object is not valid");
+            throw new EntityIsNotValidException("Exception when try to update Point - object is not valid");
         }
         POINT_REPOSITORY.update(point);
     }

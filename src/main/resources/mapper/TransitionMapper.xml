@@ -78,11 +78,13 @@
         delete from Transitions where id = #{id};
     </delete>
 
-    <resultMap id="TransitionResultMap" type="com.solvd.navigator.domain.Street" autoMapping="false">
-        <id property="id" column="street_id"/>
-        <result property="name" column="street_name"/>
-        <association property="district" column="district_id"
-                     resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
+    <resultMap id="TransitionResultMap" type="com.solvd.navigator.domain.Transition" autoMapping="false">
+        <id property="id" column="transition_id"/>
+        <association property="from" column="point_from_id"
+                     resultMap="PointFromResultMap"/>
+        <association property="to" column="point_to_id"
+                     resultMap="PointToResultMap"/>
+
     </resultMap>
 
     <resultMap id="PointFromResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">
@@ -95,7 +97,6 @@
                      resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
         <association property="type" column="from_type_id"
                      resultMap="com.solvd.navigator.persistence.PointTypeRepository.PointTypeResultMap"/>
-
     </resultMap>
 
     <resultMap id="PointToResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">

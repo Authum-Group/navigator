@@ -2,9 +2,9 @@ package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.Country;
 import com.solvd.navigator.domain.Region;
+import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.ValidationException;
 import com.solvd.navigator.persistence.CountryRepository;
 import com.solvd.navigator.persistence.mybatisImpl.CountryRepositoryMyBatisImpl;
 import com.solvd.navigator.service.CountryService;
@@ -21,12 +21,12 @@ public class CountryServiceImpl implements CountryService {
 
 
     @Override
-    public void create(Country country) throws InvalidParametersException, ValidationException {
+    public void create(Country country) throws InvalidParametersException, EntityIsNotValidException {
         if (country == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "country's object is null"));
         }
         if (!isValid(country)) {
-            throw new ValidationException(String.format(exceptionStub, "create", "country's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "country's object is not valid"));
         }
         country.setId(null);
         COUNTRY_REPOSITORY.create(country);
@@ -65,7 +65,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public void update(Country country) throws InvalidParametersException, ValidationException, ResourceNotFoundException {
+    public void update(Country country) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (country == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "country's object is null"));
         }
@@ -73,7 +73,7 @@ public class CountryServiceImpl implements CountryService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "country's id is null"));
         }
         if (!isValid(country)) {
-            throw new ValidationException(String.format(exceptionStub, "update", "country's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "country's object is not valid"));
         }
         findById(country.getId()); // TODO Change way to check object in db
         COUNTRY_REPOSITORY.update(country);

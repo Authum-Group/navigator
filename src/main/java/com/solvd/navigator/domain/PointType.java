@@ -5,6 +5,13 @@ public class PointType {
     private Long id;
     private String name;
 
+    public PointType() {
+    }
+
+    public PointType(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
