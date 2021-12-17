@@ -52,70 +52,71 @@ public class ConsoleOutputUtils {
     public void getStartPoint() {
         int status = 0;
         String lastString = "";
-        while (status < 2) {
+        while (true) {
             System.out.println("+---------------------------+\n" +
                     "| Enter the starting point. |\n" +
                     "+---------------------------+\n");
             lastString = scanner.nextLine();
-            if (status == -1) {
-                System.out.println("+--------------------------------+\n" +
-                        "| your previous input was wrong! |\n" +
-                        "+--------------------------------+\n");
-                String finalLastString = lastString;
-                List<Point> possiblePoints = shortestPathAlgorithm.getMatrixPoints().stream()
-                        .filter(point -> {
-                            return point.toString().toLowerCase(Locale.ROOT).contains(finalLastString.toLowerCase(Locale.ROOT));
-                        }).limit(5)
-                        .collect(Collectors.toList());
-                if (possiblePoints.size() == 1) {
-                    status = 2;
-                    a = possiblePoints.get(0);
-                }
-                if (possiblePoints.size() > 0) {
-                    System.out.println("+-----------------+\n" +
-                            "| Possible points |\n" +
-                            "+-----------------+\n");
-                    for (Point point : possiblePoints) {
-                        System.out.println(point.toString() + "\n");
-                    }
+            String finalLastString = lastString;
+            List<Point> possiblePoints = shortestPathAlgorithm.getMatrixPoints().stream()
+                    .filter(point -> {
+                        return point.toString().toLowerCase(Locale.ROOT).contains(finalLastString.toLowerCase(Locale.ROOT));
+                    }).limit(5)
+                    .collect(Collectors.toList());
+            if (possiblePoints.size() == 1 && possiblePoints.get(0).toString().toLowerCase(Locale.ROOT).trim().equals(finalLastString.toLowerCase(Locale.ROOT).trim())) {
+                status = 2;
+                a = possiblePoints.get(0);
+                return;
+            }
+            if (possiblePoints.size() > 0) {
+                System.out.println("+-----------------+\n" +
+                        "| Possible points |\n" +
+                        "+-----------------+\n");
+                for (Point point : possiblePoints) {
+                    System.out.println(point.toString() + "\n");
                 }
             }
-            if (status == 0) status = -1;
+            System.out.println("+--------------------------------+\n" +
+                    "| your previous input was wrong! |\n" +
+                    "+--------------------------------+\n");
+            System.out.flush();
         }
     }
 
     public void getFinishPoint() {
         int status = 0;
         String lastString = "";
-        while (status < 2) {
+        while (true) {
             System.out.println("+---------------------------+\n" +
                     "| Enter the finish point. |\n" +
                     "+---------------------------+\n");
+            System.out.flush();
             lastString = scanner.nextLine();
-            if (status == -1) {
-                System.out.println("+--------------------------------+\n" +
-                        "| your previous input was wrong! |\n" +
-                        "+--------------------------------+\n");
-                String finalLastString = lastString;
-                List<Point> possiblePoints = shortestPathAlgorithm.getMatrixPoints().stream()
-                        .filter(point -> {
-                            return point.toString().toLowerCase(Locale.ROOT).contains(finalLastString.toLowerCase(Locale.ROOT));
-                        }).limit(5)
-                        .collect(Collectors.toList());
-                if (possiblePoints.size() == 1) {
-                    status = 2;
-                    b = possiblePoints.get(0);
-                }
-                if (possiblePoints.size() > 0) {
-                    System.out.println("+-----------------+\n" +
-                            "| Possible points |\n" +
-                            "+-----------------+\n");
-                    for (Point point : possiblePoints) {
-                        System.out.println(point.toString() + "\n");
-                    }
+            String finalLastString = lastString;
+            List<Point> possiblePoints = shortestPathAlgorithm.getMatrixPoints().stream()
+                    .filter(point -> {
+                        return point.toString().toLowerCase(Locale.ROOT).contains(finalLastString.toLowerCase(Locale.ROOT));
+                    }).limit(5)
+                    .collect(Collectors.toList());
+            if (possiblePoints.size() == 1 && possiblePoints.get(0).toString().toLowerCase(Locale.ROOT).equals(finalLastString.toLowerCase(Locale.ROOT))) {
+                status = 2;
+                b = possiblePoints.get(0);
+                return;
+            }
+            if (possiblePoints.size() > 0) {
+                System.out.println("+-----------------+\n" +
+                        "| Possible points |\n" +
+                        "+-----------------+\n");
+                for (Point point : possiblePoints) {
+                    System.out.println(point.toString() + "\n");
                 }
             }
-            if (status == 0) status = -1;
+
+            System.out.println("+--------------------------------+\n" +
+                    "| your previous input was wrong! |\n" +
+                    "+--------------------------------+\n");
+            System.out.flush();
+
         }
     }
 
@@ -134,7 +135,7 @@ public class ConsoleOutputUtils {
             for (Point point : points) {
                 System.out.println("\t" + point.toString() + "\n\n");
             }
-            System.out.println(String.format("RESULT PATH COST: %s km. \n", shortestPathAlgorithm.getPathLength(a, b)));
+            System.out.println(String.format("RESULT PATH COST: %s km. \n", shortestPathAlgorithm.getPathLength(a, b).get()));
             System.out.println("PRESS ENTER KEY TO CLOSE APP\n");
             scanner.nextLine();
             System.exit(0);
