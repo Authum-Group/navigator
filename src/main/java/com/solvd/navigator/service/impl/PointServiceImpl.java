@@ -20,7 +20,7 @@ public class PointServiceImpl implements PointService {
 
     private static final PointRepository POINT_REPOSITORY = new PointRepositoryMyBatisImpl();
     private static final TransitionService TRANSITION_SERVICE = new TransitionServiceImpl();
-    private static String exeptionStub = "Exception when try to %s Point - %s";
+    private static String exceptionStub = "Exception when try to %s Point - %s";
 
     @Override
     public void create(Point point) throws ValidationException, InvalidParametersException {
@@ -118,10 +118,10 @@ public class PointServiceImpl implements PointService {
     @Override
     public void delete(Point point) throws InvalidParametersException, ResourceNotFoundException {
         if (point == null) {
-            throw new InvalidParametersException(String.format(exeptionStub, "delete", "object is null"));
+            throw new InvalidParametersException(String.format(exceptionStub, "delete", "object is null"));
         }
         if (point.getId() == null) {
-            throw new InvalidParametersException(String.format(exeptionStub, "delete", "id is null"));
+            throw new InvalidParametersException(String.format(exceptionStub, "delete", "id is null"));
         }
         findById(point.getId());
         POINT_REPOSITORY.delete(point);
