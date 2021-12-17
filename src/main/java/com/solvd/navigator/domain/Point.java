@@ -79,4 +79,11 @@ public class Point {
     public void setAvailablePoints(Map<Point, Double> availablePoints) {
         this.availablePoints = availablePoints;
     }
+
+    @Override
+    public java.lang.String toString() {
+        return "Point{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

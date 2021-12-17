@@ -16,5 +16,4 @@ public interface PointRepository {
 
     void delete(Point point);
 
-    Optional<Long> findIdByName(String pointName);
 }

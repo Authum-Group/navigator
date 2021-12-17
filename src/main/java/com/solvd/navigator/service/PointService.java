@@ -19,6 +19,5 @@ public interface PointService {
 
     void delete(Point point) throws InvalidParametersException, ResourceNotFoundException;
 
-    Long getIdByName(String pointName) throws InvalidParametersException;
 
 }

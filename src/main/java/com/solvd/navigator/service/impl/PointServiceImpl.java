@@ -134,9 +134,4 @@ public class PointServiceImpl implements PointService {
                 point.getStreet() != null &&
                 point.getType() != null;
     }
-
-    @Override
-    public Long getIdByName(String pointName) throws Exception {
-        return PointRepository.findIdByName(pointName)
-                .orElseThrow(() -> new InvalidParametersException("No point with this name"));
 }
