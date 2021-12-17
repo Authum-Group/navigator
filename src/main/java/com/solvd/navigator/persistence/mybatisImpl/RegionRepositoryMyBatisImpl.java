@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-public class RegionMyBatisRepository implements RegionRepository {
+public class RegionRepositoryMyBatisImpl implements RegionRepository {
 
     @Override
     public void create(Region region) {
@@ -48,5 +48,4 @@ public class RegionMyBatisRepository implements RegionRepository {
             regionRepository.delete(region);
         }
     }
-
 }

@@ -15,5 +15,4 @@ public interface CountryRepository {
     void update(Country country);
 
     void delete(Country country);
-
 }

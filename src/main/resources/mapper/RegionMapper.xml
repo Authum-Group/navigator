@@ -4,45 +4,34 @@
 <mapper namespace="com.solvd.navigator.persistence.RegionRepository">
 
     <sql id="regionColumns">
-        r.id as region_id,
-        r.country_id as country_id,
-        r.name as region_name
+        region.id as region_id,
+        region.country_id as country_id,
+        region.name as region_name
     </sql>
 
     <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-        INSERT INTO Regions(country_id, name) VALUES (#{country.id}, #{name});
+        insert into Regions(country_id, name) values (#{country.id}, #{name});
     </insert>
 
     <select id="findAll" resultMap="RegionResultMap">
         select
-        r.id as region_id,
-        c.id as country_id,
-        c.name as country_name,
-        r.name as region_name,
-        ci.id as city_id,
-        ci.name as city_name,
-
-
-                ТЕКСТ ТЕКСТ (STREETS DISTRICTS)
-
-        h.id as house_id,
-        h.number as house_number,
-        h.block as house_block,
-        h.number_of_entrances as house_entrance
-        from Cities ci
-        left join Districts d
-        on ci.id = d.city_id
-            ТАБЛИЦА СВЯЗКА УЛИЦЫ РАЙОНЫ
-        left join Houses h
-        on
-        st.id = h.street_id;
+        <include refid="regionColumns"/>,
+        <include refid="com.solvd.navigator.persistence.CountryRepository.countryColumns"/>
+        from Regions region
+        left join
+        Countries country
+        on region.country_id = country.id;
     </select>
 
     <select id="findById" parameterType="java.lang.Long" resultMap="RegionResultMap">
         select
-        <include refid="regionColumns"/>
-        from Regions r
-        where r.id = #{id};
+        <include refid="regionColumns"/>,
+        <include refid="com.solvd.navigator.persistence.CountryRepository.countryColumns"/>
+        from Regions region
+        left join
+        Countries country
+        on region.country_id = country.id
+        where region.id = #{id};
     </select>
 
     <update id="update" parameterType="Region">
@@ -61,8 +50,5 @@
         <result property="name" column="region_name"/>
         <association property="country" column="country_id"
                      resultMap="com.solvd.navigator.persistence.CountryRepository.CountryResultMap"/>
-        <collection property="cities" javaType="java.util.ArrayList"
-                    resultMap="com.solvd.navigator.persistence.CityRepository.CityResultMap"/>
     </resultMap>
-
 </mapper>

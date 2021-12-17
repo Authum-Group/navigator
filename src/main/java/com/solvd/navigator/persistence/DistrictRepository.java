@@ -15,5 +15,4 @@ public interface DistrictRepository {
     void update(District district);
 
     void delete(District district);
-
 }

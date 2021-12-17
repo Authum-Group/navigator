@@ -1,37 +1,20 @@
 package com.solvd.navigator.domain;
 
+import org.apache.ibatis.annotations.MapKey;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Point {
 
     private Long id;
-    private String name;
-    private District district;
+    private String name; // Дом, подъезд, участок - пофиг
+    private Double latitude;
+    private Double longitude;
     private Street street;
-    private Coordinate coordinate;
-    private Type type;
+    private PointType type;
+    private String description;
     Map<Point, Double> availablePoints = new HashMap<>();
-
-    public enum Type {
-
-        BUS_STOP("Bus stop"),
-        RESIDENTIAL_BUILDING("Residential building"),
-        PUBLIC_PLACE("Public place"),
-        ROAD("Road"),
-        UNKNOWN_LOCATION("Unknown location");
-
-        public String getTitle() {
-            return title;
-        }
-
-        private final String title;
-
-        Type(String title) {
-            this.title = title;
-        }
-
-    }
 
     public Long getId() {
         return id;
@@ -39,30 +22,6 @@ public class Point {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public District getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(District district) {
-        this.district = district;
-    }
-
-    public Street getStreet() {
-        return street;
-    }
-
-    public void setStreet(Street street) {
-        this.street = street;
     }
 
     public String getName() {
@@ -73,12 +32,44 @@ public class Point {
         this.name = name;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Street getStreet() {
+        return street;
+    }
+
+    public void setStreet(Street street) {
+        this.street = street;
+    }
+
+    public PointType getType() {
+        return type;
+    }
+
+    public void setType(PointType type) {
+        this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Map<Point, Double> getAvailablePoints() {

@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-public class PointMyBatisRepository implements PointRepository {
+public class PointRepositoryMyBatisImpl implements PointRepository {
 
     @Override
     public void create(Point point) {
@@ -48,5 +48,4 @@ public class PointMyBatisRepository implements PointRepository {
             pointRepository.delete(point);
         }
     }
-
 }

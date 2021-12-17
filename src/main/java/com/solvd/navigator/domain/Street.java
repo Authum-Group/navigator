@@ -6,7 +6,8 @@ public class Street {
 
     private Long id;
     private String name;
-    private List<House> houses;
+    private District district;
+    private List<Point> points;
 
     public Long getId() {
         return id;
@@ -24,11 +25,19 @@ public class Street {
         this.name = name;
     }
 
-    public List<House> getHouses() {
-        return houses;
+    public District getDistrict() {
+        return district;
     }
 
-    public void setHouses(List<House> houses) {
-        this.houses = houses;
+    public void setDistrict(District district) {
+        this.district = district;
+    }
+
+    public List<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
     }
 }

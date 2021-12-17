@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.navigator.persistence.TransitionRepository">
+
+    <sql id="transitionColumns">
+        transition.id as transition_id,
+        transition.point_from_id as point_from,
+        transition.point_to_id as point_to
+    </sql>
+
+    <sql id="pointFromColumns">
+        point_from.id as point_from_id,
+        point_from.name as point_from_name,
+        point_from.latitude as from_latitude,
+        point_from.longitude as from_longitude,
+        point_from.street_id as from_street_id,
+        point_from.type_id as from_type_id,
+        point_from.description as from_point_description
+    </sql>
+
+    <sql id="pointToColumns">
+        point_to.id as point_to_id,
+        point_to.name as point_to_name,
+        point_to.latitude as to_latitude,
+        point_to.longitude as to_longitude,
+        point_to.street_id as to_street_id,
+        point_to.type_id as to_type_id,
+        point_to.description as to_point_description
+    </sql>
+
+    <insert id="create" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into Transitions(point_from_id, point_to_id) VALUES (#{from.id}, #{to.id});
+    </insert>
+
+    <select id="findAll" resultMap="TransitionResultMap">
+        select
+        <include refid="transitionColumns"/>,
+        <include refid="pointFromColumns"/>,
+        <include refid="pointToColumns"/>
+        from Transitions transition
+        left join
+        Points point_from
+        on
+        transition.point_from_id = point_from.id
+        left join
+        Points point_to
+        on
+        transition.point_to_id = point_to.id;
+
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="TransitionResultMap">
+        select
+        <include refid="transitionColumns"/>,
+        <include refid="pointFromColumns"/>,
+        <include refid="pointToColumns"/>
+        from Transitions transition
+        left join
+        Points point_from
+        on
+        transition.point_from_id = point_from.id
+        left join
+        Points point_to
+        on
+        transition.point_to_id = point_to.id;
+        where point.id = #{id};
+    </select>
+
+    <update id="update" parameterType="Transition">
+        update Transitions set
+        point_from_id = #{from.id},
+        point_to_id = #{to.id}
+        where id = #{id};
+    </update>
+
+    <delete id="delete">
+        delete from Transitions where id = #{id};
+    </delete>
+
+    <resultMap id="TransitionResultMap" type="com.solvd.navigator.domain.Street" autoMapping="false">
+        <id property="id" column="street_id"/>
+        <result property="name" column="street_name"/>
+        <association property="district" column="district_id"
+                     resultMap="com.solvd.navigator.persistence.DistrictRepository.DistrictResultMap"/>
+    </resultMap>
+
+    <resultMap id="PointFromResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">
+        <id property="id" column="point_from_id"/>
+        <result property="name" column="point_from_name"/>
+        <result property="latitude" column="from_latitude"/>
+        <result property="longitude" column="from_longitude"/>
+        <result property="description" column="from_point_description"/>
+        <association property="street" column="from_street_id"
+                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
+        <association property="type" column="from_type_id"
+                     resultMap="com.solvd.navigator.persistence.PointTypeRepository.PointTypeResultMap"/>
+
+    </resultMap>
+
+    <resultMap id="PointToResultMap" type="com.solvd.navigator.domain.Point" autoMapping="false">
+        <id property="id" column="point_to_id"/>
+        <result property="name" column="point_to_name"/>
+        <result property="latitude" column="to_latitude"/>
+        <result property="longitude" column="to_longitude"/>
+        <result property="description" column="to_point_description"/>
+        <association property="street" column="to_street_id"
+                     resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
+        <association property="type" column="to_type_id"
+                     resultMap="com.solvd.navigator.persistence.PointTypeRepository.PointTypeResultMap"/>
+
+    </resultMap>
+</mapper>
