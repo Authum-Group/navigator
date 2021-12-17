@@ -15,4 +15,6 @@ public interface PointRepository {
     void update(Point point);
 
     void delete(Point point);
+
+    Optional<Long> findIdByName(String pointName);
 }

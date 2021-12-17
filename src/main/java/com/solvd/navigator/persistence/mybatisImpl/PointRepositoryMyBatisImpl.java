@@ -48,4 +48,12 @@ public class PointRepositoryMyBatisImpl implements PointRepository {
             pointRepository.delete(point);
         }
     }
+
+    @Override
+    public Optional<Long> findIdByName(String pointName) {
+        try (SqlSession session = MyBatisSessionHolder.getSqlSessionFactory().openSession(true)) {
+            PointRepository pointRepository = session.getMapper(PointRepository.class);
+            return pointRepository.findIdByName(id);
+        }
+    }
 }
