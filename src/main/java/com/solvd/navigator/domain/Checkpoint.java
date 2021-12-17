@@ -10,7 +10,7 @@ public class Checkpoint {
     private PointService pointService;
     private FloydWarshallAlgorithm floydWarshallAlgorithm;
 
-    public Checkpoint(){
+    public Checkpoint() {
         this.pointService = new PointServiceImpl();
         this.floydWarshallAlgorithm = new FloydWarshallAlgorithm();
     }
@@ -19,30 +19,32 @@ public class Checkpoint {
         LOGGER.info("Hello! Please, enter the address of the route start point :");
         Scanner scanner = new Scanner(System.in);
         pointName = scanner.nextLine();
-        List<Point>points = pointService.findAll();
+        List<Point> points = pointService.findAll();
         for (int i = 0; i < points.size(); i++) {
-            if(points.get(i) = pointName) {
-                a = points.get(i);
-                LOGGER.info("Start point was found successfully.");
-            } else {
-                LOGGER.info("Location was not found.");
+            while (points.get(i).toString != pointName) {
+                if (points.get(i).toString = pointName) {
+                    a = points.get(i);
+                    LOGGER.info("Start point was found successfully.");
+                }
             }
+        }
     }
 
     public void getFinishPoint() {
-            LOGGER.info("Enter destination : ");
-            Scanner scanner = new Scanner(System.in);
-            pointName = scanner.nextLine();
-            List<Point>points = pointService.findAll();
-            for (int i = 0; i < points.size(); i++) {
-                if(points.get(i) = pointName) {
-                    b = points.get(i);
+        LOGGER.info("Enter destination : ");
+        Scanner scanner = new Scanner(System.in);
+        pointName = scanner.nextLine();
+        List<Point> points = pointService.findAll();
+        for (int i = 0; i < points.size(); i++) {
+            while (points.get(i).toString != pointName) {
+                if (points.get(i).toString = pointName) {
+                    a = points.get(i);
                     LOGGER.info("Finish point was found successfully.");
-                } else {
-                    LOGGER.info("Location was not found.");
                 }
+            }
+        }
     }
 
-    LOGGER.info("Length your way : " + floydWarshallAlgorithm.getPathLength(Point a, Point b));
-    LOGGER.info("Shortest path: : " + floydWarshallAlgorithm.getShortPath(Point a, Point b));
-}
+        LOGGER.info("Length your way : " + floydWarshallAlgorithm.getPathLength(Point a, Point b));
+        LOGGER.info("Shortest path: : " + floydWarshallAlgorithm.getShortPath(Point a, Point b));
+    }

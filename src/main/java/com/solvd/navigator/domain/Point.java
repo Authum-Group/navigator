@@ -81,9 +81,7 @@ public class Point {
     }
 
     @Override
-    public java.lang.String toString() {
-        return "Point{" +
-                "name='" + name + '\'' +
-                '}';
+    public String toString() {
+        return name;
     }
 }
