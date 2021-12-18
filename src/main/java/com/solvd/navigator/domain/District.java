@@ -9,6 +9,14 @@ public class District {
     private City city;
     private List<Street> streets;
 
+    public District() {
+    }
+
+    public District(String name, City city) {
+        this.name = name;
+        this.city = city;
+    }
+
     public Long getId() {
         return id;
     }
@@ -39,5 +47,10 @@ public class District {
 
     public void setStreets(List<Street> streets) {
         this.streets = streets;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", city.getName(), this.name);
     }
 }

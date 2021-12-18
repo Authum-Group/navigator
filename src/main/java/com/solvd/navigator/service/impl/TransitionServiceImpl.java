@@ -1,9 +1,9 @@
 package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.Transition;
+import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.ValidationException;
 import com.solvd.navigator.persistence.TransitionRepository;
 import com.solvd.navigator.persistence.mybatisImpl.TransitionRepositoryMyBatisImpl;
 import com.solvd.navigator.service.PointService;
@@ -18,12 +18,12 @@ public class TransitionServiceImpl implements TransitionService {
     private static final String exceptionStub = "Exception when try to %s Transitions - %s";
 
     @Override
-    public void create(Transition transition) throws InvalidParametersException, ValidationException {
+    public void create(Transition transition) throws InvalidParametersException, EntityIsNotValidException {
         if (transition == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "transition's object is null"));
         }
         if (!isValid(transition)) {
-            throw new ValidationException(String.format(exceptionStub, "create", "transition's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "transition's object is not valid"));
         }
         transition.setId(null);
         TRANSITION_REPOSITORY.create(transition);
@@ -47,7 +47,7 @@ public class TransitionServiceImpl implements TransitionService {
     }
 
     @Override
-    public void update(Transition transition) throws InvalidParametersException, ValidationException, ResourceNotFoundException {
+    public void update(Transition transition) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (transition == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "transition's object is null"));
         }
@@ -55,7 +55,7 @@ public class TransitionServiceImpl implements TransitionService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "transition's id is null"));
         }
         if (!isValid(transition)) {
-            throw new ValidationException(String.format(exceptionStub, "update", "transition's object is not valid"));
+            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "transition's object is not valid"));
         }
         findById(transition.getId()); // TODO Change way to check object in db
         TRANSITION_REPOSITORY.update(transition);

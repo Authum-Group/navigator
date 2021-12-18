@@ -20,7 +20,7 @@
         from Cities city
         left join
         Regions region
-        on city.id = region.city_id;
+        on city.region_id = region.id;
     </select>
 
     <select id="findById" parameterType="java.lang.Long" resultMap="CityResultMap">
