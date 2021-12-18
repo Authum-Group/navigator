@@ -39,7 +39,7 @@ public class RegionServiceImpl implements RegionService {
     public List<Region> findAll() throws ResourceNotFoundException {
         List<Region> regions = REGION_REPOSITORY.findAll();
 
-        List<City> cities = CITY_SERVICE.findAll(); // TODO Optimization
+        List<City> cities = CITY_SERVICE.findAll();
         for (Region region : regions) {
             region.setCities(cities.stream()
                     .filter(city -> region.getId().equals(city.getRegion().getId()))
@@ -75,7 +75,7 @@ public class RegionServiceImpl implements RegionService {
         if (!isValid(region)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "update", "region's object is not valid"));
         }
-        findById(region.getId()); // TODO Change way to check object in db
+        findById(region.getId());
         REGION_REPOSITORY.update(region);
 
         for (City city : region.getCities()) {

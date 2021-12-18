@@ -39,7 +39,7 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public List<Country> findAll() throws ResourceNotFoundException {
         List<Country> countries = COUNTRY_REPOSITORY.findAll();
-        List<Region> regions = REGION_SERVICE.findAll(); // TODO Optimization
+        List<Region> regions = REGION_SERVICE.findAll();
         for (Country country : countries) {
             country.setRegions(regions.stream()
                     .filter(region -> country.getId().equals(region.getCountry().getId()))
@@ -75,7 +75,7 @@ public class CountryServiceImpl implements CountryService {
         if (!isValid(country)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "update", "country's object is not valid"));
         }
-        findById(country.getId()); // TODO Change way to check object in db
+        findById(country.getId());
         COUNTRY_REPOSITORY.update(country);
 
         for (Region region : country.getRegions()) {
@@ -93,7 +93,6 @@ public class CountryServiceImpl implements CountryService {
         if (country.getId() == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "delete", "country object's id is null"));
         }
-        // TODO Add check for mutation
         findById(country.getId());
         COUNTRY_REPOSITORY.delete(country);
     }

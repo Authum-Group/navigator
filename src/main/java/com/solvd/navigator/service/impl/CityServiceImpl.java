@@ -39,7 +39,7 @@ public class CityServiceImpl implements CityService {
     public List<City> findAll() throws ResourceNotFoundException {
         List<City> cities = CITY_REPOSITORY.findAll();
 
-        List<District> districts = DISTRICT_SERVICE.findAll(); // TODO Optimization
+        List<District> districts = DISTRICT_SERVICE.findAll();
         for (City city : cities) {
             city.setDistricts(districts.stream()
                     .filter(district -> {
@@ -78,7 +78,7 @@ public class CityServiceImpl implements CityService {
         if (!isValid(city)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "update", "city's object is not valid"));
         }
-        findById(city.getId()); // TODO Change way to check object in db
+        findById(city.getId());
         CITY_REPOSITORY.update(city);
 
         for (District district : city.getDistricts()) {

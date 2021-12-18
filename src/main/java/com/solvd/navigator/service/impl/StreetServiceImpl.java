@@ -38,10 +38,7 @@ public class StreetServiceImpl implements StreetService {
     @Override
     public List<Street> findAll() throws ResourceNotFoundException {
         List<Street> streets = STREET_REPOSITORY.findAll();
-//        if (streets.size() <= 0) {
-//            throw new ResourceNotFoundException(String.format(exceptionStub, "findAll", "there are no streets in db"));
-//        }
-        List<Point> points = POINT_SERVICE.findAll(); // TODO Optimization
+        List<Point> points = POINT_SERVICE.findAll();
         for (Street street : streets) {
             street.setPoints(points.stream()
                     .filter(point -> {
@@ -79,7 +76,7 @@ public class StreetServiceImpl implements StreetService {
         if (!isValid(street)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "update", "street's object is not valid"));
         }
-        findById(street.getId()); // TODO Change way to check object in db
+        findById(street.getId());
         STREET_REPOSITORY.update(street);
 
         for (Point point : street.getPoints()) {

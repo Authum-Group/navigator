@@ -34,14 +34,12 @@ public class PairNodesMatrix {
             for (Point node : adjancedNodes.keySet()) {
                 int col = nodeIds.indexOf(node.getId());
                 costs[row][col] = (col == -1 || row == col) ? 0 : adjancedNodes.get(node);
-
             }
         }
     }
 
     private void initializeAbilities() {
         abilities = new Integer[sideSize][sideSize];
-
         for (int row = 0; row < sideSize; row++) {
             for (int col = 0; col < sideSize; col++) {
                 abilities[row][col] = (costs[row][col] > 0) ? col : -1;
@@ -59,7 +57,7 @@ public class PairNodesMatrix {
                     Double akCost = this.costs[a][k];
                     Double kbCost = this.costs[k][b];
                     Double kCost = akCost + kbCost;
-                    if (this.costs[a][b] < 0 || kCost < this.costs[a][b]) { //TODO check
+                    if (this.costs[a][b] < 0 || kCost < this.costs[a][b]) {
                         this.costs[a][b] = kCost;
                         this.abilities[a][b] = this.abilities[a][k];
                     }

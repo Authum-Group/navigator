@@ -17,7 +17,7 @@ public class MyBatisSessionHolder {
         try {
             inputStream = Resources.getResourceAsStream(CONFIG_FILE_NAME);
         } catch (IOException ex) {
-            throw new RuntimeException("Unable to prepare mybatis config", ex); // TODO Our own exception
+            throw new RuntimeException("Unable to prepare mybatis config", ex);
         }
         SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
         return builder.build(inputStream);
