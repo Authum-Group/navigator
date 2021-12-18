@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface ShortestPathAlgorithm {
 
-    Optional<Double> getPathLength(Point a, Point b);
+    Optional<Double> getPathLength(Point from, Point to);
 
-    Optional<List<Point>> getShortPath(Point a, Point b) throws InvalidParametersException;
+    Optional<List<Point>> getShortPath(Point from, Point to) throws InvalidParametersException;
 
     List<Point> getMatrixPoints();
 }

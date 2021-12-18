@@ -1,7 +1,7 @@
 package com.solvd.navigator;
 
 import com.solvd.navigator.domain.*;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
+import com.solvd.navigator.domain.exception.EntityNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.service.*;
@@ -87,7 +87,7 @@ public class DataBaseInitialization {
                     .forEach(country -> {
                         try {
                             countryService.create(country);
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by countries");
                         }
                     });
@@ -109,7 +109,7 @@ public class DataBaseInitialization {
                     .forEach(region -> {
                         try {
                             regionService.create(region, oneCountry.getId());
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by regions");
                         }
                     });
@@ -131,7 +131,7 @@ public class DataBaseInitialization {
                     .forEach(city -> {
                         try {
                             cityService.create(city, oneRegion.getId());
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by cities");
                         }
                     });
@@ -153,7 +153,7 @@ public class DataBaseInitialization {
                     .forEach(district -> {
                         try {
                             districtService.create(district, oneCity.getId());
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by districts");
                         }
                     });
@@ -175,7 +175,7 @@ public class DataBaseInitialization {
                     .forEach(street -> {
                         try {
                             streetService.create(street, oneDistrict.getId());
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by streets");
                         }
                     });
@@ -197,7 +197,7 @@ public class DataBaseInitialization {
                     .forEach(pointType -> {
                         try {
                             pointTypeService.create(pointType);
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by point types");
                         }
                     });
@@ -215,7 +215,7 @@ public class DataBaseInitialization {
                     .forEach(point -> {
                         try {
                             pointService.create(point, oneStreet.getId());
-                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by points");
                         }
                     });
@@ -237,7 +237,7 @@ public class DataBaseInitialization {
                     .forEach(transition -> {
                         try {
                             transitionService.create(transition);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                        } catch (InvalidParametersException | EntityNotValidException ex) {
                             LOGGER.error("Exception when try to initialise database by transitions");
                         }
                     });
@@ -251,7 +251,7 @@ public class DataBaseInitialization {
             transitionService.update(oneTransition);
             //transitionService.delete(oneTransition);
 
-        } catch (EntityIsNotValidException | InvalidParametersException |
+        } catch (EntityNotValidException | InvalidParametersException |
                 ResourceNotFoundException ex) {
             LOGGER.error(ex);
         }
@@ -315,6 +315,4 @@ public class DataBaseInitialization {
         transition.setTo(to);
         return transition;
     }
-
 }
-

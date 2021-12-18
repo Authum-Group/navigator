@@ -18,8 +18,6 @@ public class Main {
         } catch (InvalidParametersException e) {
             LOGGER.error("Invalid parameters when try to show shortest path");
         }
-
         //  DataBaseInitialization.initialize();
-
     }
 }

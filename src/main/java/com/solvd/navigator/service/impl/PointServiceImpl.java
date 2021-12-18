@@ -3,7 +3,7 @@ package com.solvd.navigator.service.impl;
 import com.solvd.navigator.domain.Point;
 import com.solvd.navigator.domain.Street;
 import com.solvd.navigator.domain.Transition;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
+import com.solvd.navigator.domain.exception.EntityNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.PointRepository;
@@ -25,12 +25,12 @@ public class PointServiceImpl implements PointService {
     private static String exceptionStub = "Exception when try to %s Point - %s";
 
     @Override
-    public void create(Point point, Long streetId) throws EntityIsNotValidException, InvalidParametersException, ResourceNotFoundException {
+    public void create(Point point, Long streetId) throws EntityNotValidException, InvalidParametersException, ResourceNotFoundException {
         if (point == null) {
             throw new InvalidParametersException("Exception when try to create Point - object is null");
         }
         if (!isValid(point)) {
-            throw new EntityIsNotValidException("Exception when try to create Point - object is not valid");
+            throw new EntityNotValidException("Exception when try to create Point - object is not valid");
         }
         point.setId(null);
         Street street = null;
@@ -95,7 +95,7 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public void update(Point point) throws InvalidParametersException, ResourceNotFoundException, EntityIsNotValidException {
+    public void update(Point point) throws InvalidParametersException, ResourceNotFoundException, EntityNotValidException {
         if (point == null) {
             throw new InvalidParametersException("Exception when try to update Point - object is null");
         }
@@ -105,7 +105,7 @@ public class PointServiceImpl implements PointService {
         findById(point.getId());
 
         if (!isValid(point)) {
-            throw new EntityIsNotValidException("Exception when try to update Point - object is not valid");
+            throw new EntityNotValidException("Exception when try to update Point - object is not valid");
         }
         POINT_REPOSITORY.update(point);
     }

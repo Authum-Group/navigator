@@ -13,38 +13,38 @@ public class FloydWarshallAlgorithm implements ShortestPathAlgorithm {
 
     private PairNodesMatrix matrix;
 
-    public FloydWarshallAlgorithm(List<Point> countryNodes) {
-        matrix = new PairNodesMatrix(countryNodes);
+    public FloydWarshallAlgorithm(List<Point> points) {
+        matrix = new PairNodesMatrix(points);
         matrix.countIndirectCosts();
     }
 
     @Override
-    public Optional<Double> getPathLength(Point a, Point b) {
-        Integer aIndex = matrix.getIndex(a);
-        Integer bIndex = matrix.getIndex(b);
-        return Optional.of(matrix.getCost(aIndex, bIndex));
+    public Optional<Double> getPathLength(Point from, Point to) {
+        Integer fromIndex = matrix.getIndex(from);
+        Integer toIndex = matrix.getIndex(to);
+        return Optional.of(matrix.getCost(fromIndex, toIndex));
     }
 
     @Override
-    public Optional<List<Point>> getShortPath(Point a, Point b) throws InvalidParametersException {
+    public Optional<List<Point>> getShortPath(Point from, Point to) throws InvalidParametersException {
         List<Point> path = new LinkedList<>();
-        int i = matrix.getIndex(a);
-        int j = matrix.getIndex(b);
-        if (i < 0 || j < 0) {
-            throw new InvalidParametersException("Error when try to get short path");
+        int fromIndex = matrix.getIndex(from);
+        int toIndex = matrix.getIndex(to);
+        if (fromIndex < 0 || toIndex < 0) {
+            throw new InvalidParametersException("Error when try to get short path - there are no such points in matrix");
         }
-        if (matrix.getAbility(i, j) == -1) {
+        if (matrix.getAbility(fromIndex, toIndex) == -1) {
             return Optional.empty();
         }
-        path.add(matrix.getNodeByIndex(i));
-        while (i != j) {
-            i = matrix.getAbility(i, j);
-            path.add(matrix.getNodeByIndex(i));
+        path.add(matrix.getNodeByIndex(fromIndex));
+        while (fromIndex != toIndex) {
+            fromIndex = matrix.getAbility(fromIndex, toIndex);
+            path.add(matrix.getNodeByIndex(fromIndex));
         }
         return Optional.of(Collections.unmodifiableList(path));
     }
 
     public List<Point> getMatrixPoints() {
-        return this.matrix.getNodes();
+        return this.matrix.getPoints();
     }
 }

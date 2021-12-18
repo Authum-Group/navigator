@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 
 public class PointTypeRepositoryMyBatisImpl implements PointTypeRepository {
+
     @Override
     public void create(PointType type) {
         try (SqlSession session = MyBatisSessionHolder.getSqlSessionFactory().openSession(true)) {

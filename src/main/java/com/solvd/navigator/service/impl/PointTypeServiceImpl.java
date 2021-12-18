@@ -1,7 +1,7 @@
 package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.PointType;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
+import com.solvd.navigator.domain.exception.EntityNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.PointTypeRepository;
@@ -16,12 +16,12 @@ public class PointTypeServiceImpl implements PointTypeService {
     private static final String exceptionStub = "Exception when try to %s PointType - %s";
 
     @Override
-    public void create(PointType pointType) throws EntityIsNotValidException, InvalidParametersException, ResourceNotFoundException {
+    public void create(PointType pointType) throws EntityNotValidException, InvalidParametersException, ResourceNotFoundException {
         if (pointType == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "point type's object is null"));
         }
         if (!isValid(pointType)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "point type's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "create", "point type's object is not valid"));
         }
         pointType.setId(null);
         POINT_TYPE_REPOSITORY.create(pointType);
@@ -46,7 +46,7 @@ public class PointTypeServiceImpl implements PointTypeService {
     }
 
     @Override
-    public void update(PointType pointType) throws InvalidParametersException, ResourceNotFoundException, EntityIsNotValidException {
+    public void update(PointType pointType) throws InvalidParametersException, ResourceNotFoundException, EntityNotValidException {
         if (pointType == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "point type's object is null"));
         }
@@ -54,7 +54,7 @@ public class PointTypeServiceImpl implements PointTypeService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "point type's id is null"));
         }
         if (!isValid(pointType)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "point type's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "update", "point type's object is not valid"));
         }
         findById(pointType.getId());
         POINT_TYPE_REPOSITORY.update(pointType);

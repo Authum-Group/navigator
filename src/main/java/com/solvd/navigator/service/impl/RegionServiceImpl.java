@@ -3,7 +3,7 @@ package com.solvd.navigator.service.impl;
 import com.solvd.navigator.domain.City;
 import com.solvd.navigator.domain.Country;
 import com.solvd.navigator.domain.Region;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
+import com.solvd.navigator.domain.exception.EntityNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.RegionRepository;
@@ -23,12 +23,12 @@ public class RegionServiceImpl implements RegionService {
     private static final String exceptionStub = "Exception when try to %s Region - %s";
 
     @Override
-    public void create(Region region, Long countryId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
+    public void create(Region region, Long countryId) throws InvalidParametersException, EntityNotValidException, ResourceNotFoundException {
         if (region == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "region's object is null"));
         }
         if (!isValid(region)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "region's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "create", "region's object is not valid"));
         }
         region.setId(null);
         Country country = null;
@@ -75,7 +75,7 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
-    public void update(Region region) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
+    public void update(Region region) throws InvalidParametersException, EntityNotValidException, ResourceNotFoundException {
         if (region == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "region's object is null"));
         }
@@ -83,7 +83,7 @@ public class RegionServiceImpl implements RegionService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "region's id is null"));
         }
         if (!isValid(region)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "region's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "update", "region's object is not valid"));
         }
         findById(region.getId());
         REGION_REPOSITORY.update(region);
