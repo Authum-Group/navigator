@@ -50,7 +50,6 @@ public class ConsoleOutputUtils {
     }
 
     public void getStartPoint() {
-        int status = 0;
         String lastString = "";
         while (true) {
             System.out.println("+---------------------------+\n" +
@@ -64,7 +63,6 @@ public class ConsoleOutputUtils {
                     }).limit(5)
                     .collect(Collectors.toList());
             if (possiblePoints.size() == 1 && possiblePoints.get(0).toString().toLowerCase(Locale.ROOT).trim().equals(finalLastString.toLowerCase(Locale.ROOT).trim())) {
-                status = 2;
                 a = possiblePoints.get(0);
                 return;
             }
@@ -84,7 +82,6 @@ public class ConsoleOutputUtils {
     }
 
     public void getFinishPoint() {
-        int status = 0;
         String lastString = "";
         while (true) {
             System.out.println("+---------------------------+\n" +
@@ -99,7 +96,6 @@ public class ConsoleOutputUtils {
                     }).limit(5)
                     .collect(Collectors.toList());
             if (possiblePoints.size() == 1 && possiblePoints.get(0).toString().toLowerCase(Locale.ROOT).equals(finalLastString.toLowerCase(Locale.ROOT))) {
-                status = 2;
                 b = possiblePoints.get(0);
                 return;
             }
@@ -111,12 +107,10 @@ public class ConsoleOutputUtils {
                     System.out.println(point.toString() + "\n");
                 }
             }
-
             System.out.println("+--------------------------------+\n" +
                     "| your previous input was wrong! |\n" +
                     "+--------------------------------+\n");
             System.out.flush();
-
         }
     }
 
@@ -129,17 +123,14 @@ public class ConsoleOutputUtils {
             System.out.println("+-------------------------------------+\n" +
                     "| There is no path between the points |\n" +
                     "+-------------------------------------+\n");
-            System.out.println("PRESS ENTER KEY TO CLOSE APP\n");
-            scanner.nextLine();
-            System.exit(0);
         } else {
             for (Point point : points) {
                 System.out.println("\t" + point.toString() + "\n\n");
             }
             System.out.println(String.format("RESULT PATH COST: %s km. \n", shortestPathAlgorithm.getPathLength(a, b).get()));
-            System.out.println("PRESS ENTER KEY TO CLOSE APP\n");
-            scanner.nextLine();
-            System.exit(0);
         }
+        System.out.println("PRESS ENTER KEY TO CLOSE APP\n");
+        scanner.nextLine();
+        System.exit(0);
     }
 }

@@ -3,7 +3,7 @@ package com.solvd.navigator.service.impl;
 import com.solvd.navigator.domain.City;
 import com.solvd.navigator.domain.District;
 import com.solvd.navigator.domain.Street;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
+import com.solvd.navigator.domain.exception.EntityNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.DistrictRepository;
@@ -23,12 +23,12 @@ public class DistrictServiceImpl implements DistrictService {
     private static final String exceptionStub = "Exception when try to %s District - %s";
 
     @Override
-    public void create(District district, Long cityId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
+    public void create(District district, Long cityId) throws InvalidParametersException, EntityNotValidException, ResourceNotFoundException {
         if (district == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "district's object is null"));
         }
         if (!isValid(district)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "district object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "create", "district object is not valid"));
         }
         district.setId(null);
         City city = null;
@@ -75,7 +75,7 @@ public class DistrictServiceImpl implements DistrictService {
     }
 
     @Override
-    public void update(District district) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
+    public void update(District district) throws InvalidParametersException, EntityNotValidException, ResourceNotFoundException {
         if (district == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "district's object is null"));
         }
@@ -83,7 +83,7 @@ public class DistrictServiceImpl implements DistrictService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "district's id is null"));
         }
         if (!isValid(district)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "district's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "update", "district's object is not valid"));
         }
         findById(district.getId());
         DISTRICT_REPOSITORY.update(district);

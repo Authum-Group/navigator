@@ -11,30 +11,29 @@ import java.util.stream.Collectors;
 public class PairNodesMatrix {
 
     private Integer sideSize;
-    private List<Point> nodes;
+    private final List<Point> points;
     private Double[][] costs;
     private Integer[][] abilities;
 
-    public PairNodesMatrix(List<Point> nodes) {
-        this.nodes = Collections.unmodifiableList(nodes);
+    public PairNodesMatrix(List<Point> points) {
+        this.points = Collections.unmodifiableList(points);
         initializeCosts();
         initializeAbilities();
         countIndirectCosts();
     }
 
     private void initializeCosts() {
-        sideSize = nodes.size();
+        sideSize = points.size();
         costs = new Double[sideSize][sideSize];
-        for (int i = 0; i < costs.length; i++) {
-            Arrays.fill(costs[i], (double) -1);
+        for (Double[] cost : costs) {
+            Arrays.fill(cost, (double) -1);
         }
-        List<Long> nodeIds = nodes.stream().map(node -> node.getId()).collect(Collectors.toList());
+        List<Long> nodeIds = points.stream().map(Point::getId).collect(Collectors.toList());
         for (int row = 0; row < sideSize; row++) {
-            Map<Point, Double> adjancedNodes = nodes.get(row).getAvailablePoints();
+            Map<Point, Double> adjancedNodes = points.get(row).getAvailablePoints();
             for (Point node : adjancedNodes.keySet()) {
                 int col = nodeIds.indexOf(node.getId());
                 costs[row][col] = (col == -1 || row == col) ? new Double(0) : adjancedNodes.get(node);
-
             }
         }
     }
@@ -57,7 +56,7 @@ public class PairNodesMatrix {
                     }
                     Double akCost = this.costs[a][k];
                     Double kbCost = this.costs[k][b];
-                    Double kCost = akCost + kbCost;
+                    double kCost = akCost + kbCost;
                     if (this.costs[a][b] < 0 || kCost < this.costs[a][b]) {
                         this.costs[a][b] = kCost;
                         this.abilities[a][b] = this.abilities[a][k];
@@ -80,14 +79,14 @@ public class PairNodesMatrix {
     }
 
     public int getIndex(Point node) {
-        return this.nodes.indexOf(node);
+        return this.points.indexOf(node);
     }
 
     public Point getNodeByIndex(Integer index) {
-        return this.nodes.get(index);
+        return this.points.get(index);
     }
 
-    public List<Point> getNodes() {
-        return nodes;
+    public List<Point> getPoints() {
+        return points;
     }
 }

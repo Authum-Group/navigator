@@ -3,7 +3,7 @@ package com.solvd.navigator.service.impl;
 import com.solvd.navigator.domain.City;
 import com.solvd.navigator.domain.District;
 import com.solvd.navigator.domain.Region;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
+import com.solvd.navigator.domain.exception.EntityNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.CityRepository;
@@ -23,14 +23,13 @@ public class CityServiceImpl implements CityService {
     private static final String exceptionStub = "Exception when try to %s City - %s";
 
     @Override
-    public void create(City city, Long regionId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
+    public void create(City city, Long regionId) throws InvalidParametersException, EntityNotValidException, ResourceNotFoundException {
         if (city == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "city's object is null"));
         }
         if (!isValid(city)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "create", "city's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "create", "city's object is not valid"));
         }
-
         city.setId(null);
         Region region = null;
         if (regionId != null) {
@@ -79,7 +78,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void update(City city) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
+    public void update(City city) throws InvalidParametersException, EntityNotValidException, ResourceNotFoundException {
         if (city == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "city's object is null"));
         }
@@ -87,7 +86,7 @@ public class CityServiceImpl implements CityService {
             throw new InvalidParametersException(String.format(exceptionStub, "update", "city's id is null"));
         }
         if (!isValid(city)) {
-            throw new EntityIsNotValidException(String.format(exceptionStub, "update", "city's object is not valid"));
+            throw new EntityNotValidException(String.format(exceptionStub, "update", "city's object is not valid"));
         }
         findById(city.getId());
         CITY_REPOSITORY.update(city);

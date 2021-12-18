@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import java.util.List;
 
 public class TransitionRepositoryMyBatisImpl implements TransitionRepository {
+    
     @Override
     public void create(Transition transition) {
         try (SqlSession session = MyBatisSessionHolder.getSqlSessionFactory().openSession(true)) {
