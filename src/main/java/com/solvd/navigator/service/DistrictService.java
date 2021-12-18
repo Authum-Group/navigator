@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface DistrictService {
 
-    void create(District district) throws InvalidParametersException, EntityIsNotValidException;
+    void create(District district, Long cityId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException;
 
     List<District> findAll() throws ResourceNotFoundException;
 

@@ -51,6 +51,6 @@ public class District {
 
     @Override
     public String toString() {
-        return String.format("%s %s", city.getName(), this.name);
+        return String.format("%s %s", city.getName(), this.getName());
     }
 }

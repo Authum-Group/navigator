@@ -2,6 +2,7 @@ package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.City;
 import com.solvd.navigator.domain.District;
+import com.solvd.navigator.domain.Region;
 import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
@@ -9,6 +10,7 @@ import com.solvd.navigator.persistence.CityRepository;
 import com.solvd.navigator.persistence.mybatisImpl.CityRepositoryMyBatisImpl;
 import com.solvd.navigator.service.CityService;
 import com.solvd.navigator.service.DistrictService;
+import com.solvd.navigator.service.RegionService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,21 +19,30 @@ public class CityServiceImpl implements CityService {
 
     private static final CityRepository CITY_REPOSITORY = new CityRepositoryMyBatisImpl();
     private static final DistrictService DISTRICT_SERVICE = new DistrictServiceImpl();
+    private static final RegionService REGION_SERVICE = new RegionServiceImpl();
     private static final String exceptionStub = "Exception when try to %s City - %s";
 
     @Override
-    public void create(City city) throws InvalidParametersException, EntityIsNotValidException {
+    public void create(City city, Long regionId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (city == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "city's object is null"));
         }
         if (!isValid(city)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "create", "city's object is not valid"));
         }
-        city.setId(null);
-        CITY_REPOSITORY.create(city);
 
+        city.setId(null);
+        Region region = null;
+        if (regionId != null) {
+            region = REGION_SERVICE.findById(regionId);
+        }
+        city.setRegion(region);
+        CITY_REPOSITORY.create(city);
+        if (city.getDistricts() == null) {
+            return;
+        }
         for (District district : city.getDistricts()) {
-            DISTRICT_SERVICE.create(district);
+            DISTRICT_SERVICE.create(district, city.getId());
         }
     }
 

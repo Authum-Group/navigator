@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PointService {
 
-    void create(Point point) throws EntityIsNotValidException, InvalidParametersException;
+    void create(Point point, Long districtId) throws EntityIsNotValidException, InvalidParametersException, ResourceNotFoundException;
 
     List<Point> findAll() throws ResourceNotFoundException;
 

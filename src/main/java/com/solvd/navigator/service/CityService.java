@@ -8,7 +8,7 @@ import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import java.util.List;
 
 public interface CityService {
-    void create(City city) throws InvalidParametersException, EntityIsNotValidException;
+    void create(City city, Long regionId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException;
 
     List<City> findAll() throws ResourceNotFoundException;
 

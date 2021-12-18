@@ -21,13 +21,13 @@
     <select id="findById" parameterType="java.lang.Long" resultMap="PointTypeResultMap">
         select
         <include refid="pointTypeColumns"/>
-        from Point_types type;
+        from Point_types type
         where
         type.id = #{id};
     </select>
 
     <update id="update" parameterType="PointType">
-        update Point_type set
+        update Point_types set
         name = #{name}
         where id = #{id};
     </update>

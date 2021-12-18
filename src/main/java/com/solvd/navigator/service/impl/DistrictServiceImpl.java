@@ -1,5 +1,6 @@
 package com.solvd.navigator.service.impl;
 
+import com.solvd.navigator.domain.City;
 import com.solvd.navigator.domain.District;
 import com.solvd.navigator.domain.Street;
 import com.solvd.navigator.domain.exception.EntityIsNotValidException;
@@ -7,6 +8,7 @@ import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.DistrictRepository;
 import com.solvd.navigator.persistence.mybatisImpl.DistrictRepositoryMyBatisImpl;
+import com.solvd.navigator.service.CityService;
 import com.solvd.navigator.service.DistrictService;
 import com.solvd.navigator.service.StreetService;
 
@@ -17,10 +19,11 @@ public class DistrictServiceImpl implements DistrictService {
 
     private static final DistrictRepository DISTRICT_REPOSITORY = new DistrictRepositoryMyBatisImpl();
     private static final StreetService STREET_SERVICE = new StreetServiceImpl();
+    private static final CityService CITY_SERVICE = new CityServiceImpl();
     private static final String exceptionStub = "Exception when try to %s District - %s";
 
     @Override
-    public void create(District district) throws InvalidParametersException, EntityIsNotValidException {
+    public void create(District district, Long cityId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (district == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "district's object is null"));
         }
@@ -28,10 +31,17 @@ public class DistrictServiceImpl implements DistrictService {
             throw new EntityIsNotValidException(String.format(exceptionStub, "create", "district object is not valid"));
         }
         district.setId(null);
+        City city = null;
+        if (cityId != null) {
+            city = CITY_SERVICE.findById(cityId);
+        }
+        district.setCity(city);
         DISTRICT_REPOSITORY.create(district);
-
+        if (district.getStreets() == null) {
+            return;
+        }
         for (Street districtStreet : district.getStreets()) {
-            STREET_SERVICE.create(districtStreet);
+            STREET_SERVICE.create(districtStreet, district.getId());
         }
     }
 

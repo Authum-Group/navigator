@@ -1,5 +1,6 @@
 package com.solvd.navigator.service.impl;
 
+import com.solvd.navigator.domain.District;
 import com.solvd.navigator.domain.Point;
 import com.solvd.navigator.domain.Street;
 import com.solvd.navigator.domain.exception.EntityIsNotValidException;
@@ -7,6 +8,7 @@ import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.StreetRepository;
 import com.solvd.navigator.persistence.mybatisImpl.StreetRepositoryMyBatisImpl;
+import com.solvd.navigator.service.DistrictService;
 import com.solvd.navigator.service.PointService;
 import com.solvd.navigator.service.StreetService;
 
@@ -17,10 +19,11 @@ public class StreetServiceImpl implements StreetService {
 
     private static final StreetRepository STREET_REPOSITORY = new StreetRepositoryMyBatisImpl();
     private static final PointService POINT_SERVICE = new PointServiceImpl();
+    private static final DistrictService DISTRICT_SERVICE = new DistrictServiceImpl();
     private static final String exceptionStub = "Exception when try to %s Street - %s";
 
     @Override
-    public void create(Street street) throws InvalidParametersException, EntityIsNotValidException {
+    public void create(Street street, Long districtId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (street == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "street's object is null"));
         }
@@ -28,10 +31,17 @@ public class StreetServiceImpl implements StreetService {
             throw new EntityIsNotValidException(String.format(exceptionStub, "create", "street's object is not valid"));
         }
         street.setId(null);
+        District district = null;
+        if (districtId != null) {
+            district = DISTRICT_SERVICE.findById(districtId);
+        }
+        street.setDistrict(district);
         STREET_REPOSITORY.create(street);
-
+        if (street.getPoints() == null) {
+            return;
+        }
         for (Point streetPoint : street.getPoints()) {
-            POINT_SERVICE.create(streetPoint);
+            POINT_SERVICE.create(streetPoint, street.getId());
         }
     }
 

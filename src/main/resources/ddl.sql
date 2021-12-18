@@ -12,7 +12,7 @@ ALTER TABLE Countries AUTO_INCREMENT=1;
 create table if not exists Regions(
 id serial,
 country_id bigint unsigned not null,
-name varchar(45) not null unique,
+name varchar(45) not null,
 primary key(id),
 constraint fk_regions_country_id foreign key(country_id) references Countries(id)
 on update no action

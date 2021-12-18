@@ -30,7 +30,7 @@
         from Districts district
         left join
         Cities city
-        on district.city_id = city.id;
+        on district.city_id = city.id
         where
         district.id = #{id};
     </select>

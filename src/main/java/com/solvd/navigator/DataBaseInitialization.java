@@ -18,16 +18,16 @@ public class DataBaseInitialization {
 
     public static void initialize() {
         List<Country> countries = Arrays.asList(
-                createCountry("belarus")
+                createCountry("Республика Беларусь")
         );
 
         List<Region> regions = Arrays.asList(
-                createRegion(countries.get(0), "Могилевский"),
-                createRegion(countries.get(0), "Брестский"),
-                createRegion(countries.get(0), "Минский"),
-                createRegion(countries.get(0), "Гомельcкий"),
-                createRegion(countries.get(0), "Гродненский"),
-                createRegion(countries.get(0), "Витебский")
+                createRegion(countries.get(0), "Могилевская область"),
+                createRegion(countries.get(0), "Брестская область"),
+                createRegion(countries.get(0), "Минская область"),
+                createRegion(countries.get(0), "Гомельcкая область"),
+                createRegion(countries.get(0), "Гродненская область"),
+                createRegion(countries.get(0), "Витебская область")
         );
 
         List<City> cities = Arrays.asList(
@@ -79,7 +79,7 @@ public class DataBaseInitialization {
         );
 
         /**
-         *  Country CRUD
+         *  Country CRUD (WORK)
          */
         try {
             CountryService countryService = new CountryServiceImpl();
@@ -87,19 +87,19 @@ public class DataBaseInitialization {
                     .forEach(country -> {
                         try {
                             countryService.create(country);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by countries");
                         }
                     });
 
-            List<Country> allCountries = countryService.findAll();
+            countries = countryService.findAll();
 
-            Country oneCountry = countryService.findById(allCountries.get(1).getId());
+            Country oneCountry = countryService.findById(countries.get(1).getId());
 
             oneCountry.setName("MODIFIED");
 
             countryService.update(oneCountry);
-            //countryService.delete(oneCountry);
+            // countryService.delete(oneCountry);
 
             /**
              *  Region CRUD
@@ -108,8 +108,8 @@ public class DataBaseInitialization {
             regions.stream()
                     .forEach(region -> {
                         try {
-                            regionService.create(region);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                            regionService.create(region, oneCountry.getId());
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by regions");
                         }
                     });
@@ -130,8 +130,8 @@ public class DataBaseInitialization {
             cities.stream()
                     .forEach(city -> {
                         try {
-                            cityService.create(city);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                            cityService.create(city, oneRegion.getId());
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by cities");
                         }
                     });
@@ -152,8 +152,8 @@ public class DataBaseInitialization {
             districts.stream()
                     .forEach(district -> {
                         try {
-                            districtService.create(district);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                            districtService.create(district, oneCity.getId());
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by districts");
                         }
                     });
@@ -174,8 +174,8 @@ public class DataBaseInitialization {
             streets.stream()
                     .forEach(street -> {
                         try {
-                            streetService.create(street);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                            streetService.create(street, oneDistrict.getId());
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by streets");
                         }
                     });
@@ -192,23 +192,20 @@ public class DataBaseInitialization {
             /**
              *  PointType CRUD
              */
-/*            PointTypeService pointTypeService = new PointTypeServiceImpl();
+            PointTypeService pointTypeService = new PointTypeServiceImpl();
             pointTypes.stream()
                     .forEach(pointType -> {
-                        pointTypeService.create(pointType);
-                    } catch(InvalidParametersException | EntityIsNotValidException ex){
-                LOGGER.error("Exception when try to initialise database by points");
-            }
-        });
-
-        List<PointType> allPointTypes = pointTypeService.findAll();
-
-        PointType onePointType = pointTypeService.findById(allPointTypes.get(1).getId());
-
-        onePointType.setName("MODIFIED");
-
-        pointTypeService.update(onePointType);
-        //pointTypeService.delete(onePointType);*/
+                        try {
+                            pointTypeService.create(pointType);
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
+                            LOGGER.error("Exception when try to initialise database by point types");
+                        }
+                    });
+            List<PointType> allPointTypes = pointTypeService.findAll();
+            PointType onePointType = pointTypeService.findById(allPointTypes.get(1).getId());
+            onePointType.setName("MODIFIED");
+            pointTypeService.update(onePointType);
+            //pointTypeService.delete(onePointType);
 
             /**
              *  Point CRUD
@@ -217,8 +214,8 @@ public class DataBaseInitialization {
             points.stream()
                     .forEach(point -> {
                         try {
-                            pointService.create(point);
-                        } catch (InvalidParametersException | EntityIsNotValidException ex) {
+                            pointService.create(point, oneStreet.getId());
+                        } catch (InvalidParametersException | EntityIsNotValidException | ResourceNotFoundException ex) {
                             LOGGER.error("Exception when try to initialise database by points");
                         }
                     });
