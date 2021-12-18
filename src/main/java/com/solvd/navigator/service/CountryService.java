@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CountryService {
 
-    void create(Country country) throws InvalidParametersException, EntityIsNotValidException;
+    void create(Country country) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException;
 
     List<Country> findAll() throws ResourceNotFoundException;
 

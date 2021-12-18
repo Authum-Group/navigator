@@ -63,8 +63,8 @@
         left join
         Points point_to
         on
-        transition.point_to_id = point_to.id;
-        where point.id = #{id};
+        transition.point_to_id = point_to.id
+        where transition.id = #{id};
     </select>
 
     <update id="update" parameterType="Transition">

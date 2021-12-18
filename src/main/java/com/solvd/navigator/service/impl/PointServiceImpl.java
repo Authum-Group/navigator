@@ -1,6 +1,7 @@
 package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.Point;
+import com.solvd.navigator.domain.Street;
 import com.solvd.navigator.domain.Transition;
 import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
@@ -8,6 +9,7 @@ import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.PointRepository;
 import com.solvd.navigator.persistence.mybatisImpl.PointRepositoryMyBatisImpl;
 import com.solvd.navigator.service.PointService;
+import com.solvd.navigator.service.StreetService;
 import com.solvd.navigator.service.TransitionService;
 
 import java.util.HashMap;
@@ -19,10 +21,11 @@ public class PointServiceImpl implements PointService {
 
     private static final PointRepository POINT_REPOSITORY = new PointRepositoryMyBatisImpl();
     private static final TransitionService TRANSITION_SERVICE = new TransitionServiceImpl();
+    private static final StreetService STREET_SERVICE = new StreetServiceImpl();
     private static String exceptionStub = "Exception when try to %s Point - %s";
 
     @Override
-    public void create(Point point) throws EntityIsNotValidException, InvalidParametersException {
+    public void create(Point point, Long streetId) throws EntityIsNotValidException, InvalidParametersException, ResourceNotFoundException {
         if (point == null) {
             throw new InvalidParametersException("Exception when try to create Point - object is null");
         }
@@ -30,6 +33,11 @@ public class PointServiceImpl implements PointService {
             throw new EntityIsNotValidException("Exception when try to create Point - object is not valid");
         }
         point.setId(null);
+        Street street = null;
+        if (streetId != null) {
+            street = STREET_SERVICE.findById(streetId);
+        }
+        point.setStreet(street);
         POINT_REPOSITORY.create(point);
     }
 

@@ -21,7 +21,7 @@ public class CountryServiceImpl implements CountryService {
 
 
     @Override
-    public void create(Country country) throws InvalidParametersException, EntityIsNotValidException {
+    public void create(Country country) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (country == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "country's object is null"));
         }
@@ -30,9 +30,11 @@ public class CountryServiceImpl implements CountryService {
         }
         country.setId(null);
         COUNTRY_REPOSITORY.create(country);
-
+        if (country.getRegions() == null) {
+            return;
+        }
         for (Region region : country.getRegions()) {
-            REGION_SERVICE.create(region);
+            REGION_SERVICE.create(region, country.getId());
         }
     }
 

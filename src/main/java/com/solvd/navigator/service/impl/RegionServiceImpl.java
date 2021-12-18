@@ -1,6 +1,7 @@
 package com.solvd.navigator.service.impl;
 
 import com.solvd.navigator.domain.City;
+import com.solvd.navigator.domain.Country;
 import com.solvd.navigator.domain.Region;
 import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
@@ -8,6 +9,7 @@ import com.solvd.navigator.domain.exception.ResourceNotFoundException;
 import com.solvd.navigator.persistence.RegionRepository;
 import com.solvd.navigator.persistence.mybatisImpl.RegionRepositoryMyBatisImpl;
 import com.solvd.navigator.service.CityService;
+import com.solvd.navigator.service.CountryService;
 import com.solvd.navigator.service.RegionService;
 
 import java.util.List;
@@ -17,10 +19,11 @@ public class RegionServiceImpl implements RegionService {
 
     private static final RegionRepository REGION_REPOSITORY = new RegionRepositoryMyBatisImpl();
     private static final CityService CITY_SERVICE = new CityServiceImpl();
+    private static final CountryService COUNTRY_SERVICE = new CountryServiceImpl();
     private static final String exceptionStub = "Exception when try to %s Region - %s";
 
     @Override
-    public void create(Region region) throws InvalidParametersException, EntityIsNotValidException {
+    public void create(Region region, Long countryId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException {
         if (region == null) {
             throw new InvalidParametersException(String.format(exceptionStub, "create", "region's object is null"));
         }
@@ -28,10 +31,17 @@ public class RegionServiceImpl implements RegionService {
             throw new EntityIsNotValidException(String.format(exceptionStub, "create", "region's object is not valid"));
         }
         region.setId(null);
+        Country country = null;
+        if (countryId != null) {
+            country = COUNTRY_SERVICE.findById(countryId);
+        }
+        region.setCountry(country);
         REGION_REPOSITORY.create(region);
-
+        if (region.getCities() == null) {
+            return;
+        }
         for (City city : region.getCities()) {
-            CITY_SERVICE.create(city);
+            CITY_SERVICE.create(city, region.getId());
         }
     }
 

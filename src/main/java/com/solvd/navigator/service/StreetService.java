@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StreetService {
 
-    void create(Street street) throws InvalidParametersException, EntityIsNotValidException;
+    void create(Street street, Long districtId) throws InvalidParametersException, EntityIsNotValidException, ResourceNotFoundException;
 
     List<Street> findAll() throws ResourceNotFoundException;
 

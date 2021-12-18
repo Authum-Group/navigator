@@ -129,6 +129,7 @@ public class ConsoleOutputUtils {
             System.out.println("+-------------------------------------+\n" +
                     "| There is no path between the points |\n" +
                     "+-------------------------------------+\n");
+            System.out.println("PRESS ENTER KEY TO CLOSE APP\n");
             scanner.nextLine();
             System.exit(0);
         } else {
