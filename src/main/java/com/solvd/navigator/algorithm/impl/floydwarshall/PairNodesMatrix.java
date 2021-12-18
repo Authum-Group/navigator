@@ -33,7 +33,8 @@ public class PairNodesMatrix {
             Map<Point, Double> adjancedNodes = nodes.get(row).getAvailablePoints();
             for (Point node : adjancedNodes.keySet()) {
                 int col = nodeIds.indexOf(node.getId());
-                costs[row][col] = (col == -1 || row == col) ? 0 : adjancedNodes.get(node);
+                costs[row][col] = (col == -1 || row == col) ? new Double(0) : adjancedNodes.get(node);
+
             }
         }
     }

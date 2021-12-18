@@ -19,7 +19,7 @@ public class Main {
             LOGGER.error("Invalid parameters when try to show shortest path");
         }
 
-        //  DataBaseInitialization.initialize();
+        DataBaseInitialization.initialize();
 
     }
 }
