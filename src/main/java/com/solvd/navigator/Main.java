@@ -5,10 +5,19 @@ import com.solvd.navigator.utils.ConsoleOutputUtils;
 
 public class Main {
 
-    public static void main(String[] args) throws InvalidParametersException {
-        ConsoleOutputUtils outputUtils = new ConsoleOutputUtils();
-        outputUtils.getStartPoint();
-        outputUtils.getFinishPoint();
-        outputUtils.showShortestPath();
+    public static final Logger LOGGER = LogManager.getLogger(Main.class);
+
+    public static void main(String[] args) {
+        try {
+            ConsoleOutputUtils outputUtils = new ConsoleOutputUtils();
+            outputUtils.getStartPoint();
+            outputUtils.getFinishPoint();
+            outputUtils.showShortestPath();
+        } catch (InvalidParametersException e) {
+            e.printStackTrace();
+        }
+
+      //  DataBaseInitialization.initialize();
+
     }
 }
