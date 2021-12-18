@@ -2,16 +2,8 @@ package com.solvd.navigator;
 
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.utils.ConsoleOutputUtils;
-import com.solvd.navigator.domain.*;
-import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
-import com.solvd.navigator.service.*;
-import com.solvd.navigator.service.impl.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class Main {
 
@@ -24,7 +16,7 @@ public class Main {
             outputUtils.getFinishPoint();
             outputUtils.showShortestPath();
         } catch (InvalidParametersException e) {
-            e.printStackTrace();
+            LOGGER.error("Invalid parameters when try to show shortest path");
         }
 
         DataBaseInitialization.initialize();

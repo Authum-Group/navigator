@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// TODO AvailablePoints
 public class PointServiceImpl implements PointService {
 
     private static final PointRepository POINT_REPOSITORY = new PointRepositoryMyBatisImpl();
@@ -37,11 +36,6 @@ public class PointServiceImpl implements PointService {
     @Override
     public List<Point> findAll() throws ResourceNotFoundException {
         List<Point> points = POINT_REPOSITORY.findAll();
-//        if (points.size() <= 0) {
-//            throw new ResourceNotFoundException("Exception when try to get all Points - there are no Points in database");
-//        }
-
-        //TODO Simplify
         List<Transition> transitions = TRANSITION_SERVICE.findAll();
         for (Point point : points) {
             List<Transition> ourTransitions = transitions.stream().filter(transition -> {
@@ -54,11 +48,8 @@ public class PointServiceImpl implements PointService {
                 Double longitudeFrom = transition.getFrom().getLongitude();
                 Double latitudeTo = transition.getTo().getLatitude();
                 Double longitudeTo = transition.getTo().getLongitude();
-                Double AC = Math.abs(longitudeTo - longitudeFrom);
-                Double BC = Math.abs(latitudeTo - latitudeFrom);
-                Double cost = Math.sqrt(Math.pow(AC, 2) + Math.pow(BC, 2));
+                Double cost = latLongToKM(latitudeFrom, longitudeFrom, latitudeTo, longitudeTo);
                 availablePoints.put(transition.getTo(), cost);
-
             }
             point.setAvailablePoints(availablePoints);
         }
@@ -87,11 +78,8 @@ public class PointServiceImpl implements PointService {
             Double longitudeFrom = transition.getFrom().getLongitude();
             Double latitudeTo = transition.getTo().getLatitude();
             Double longitudeTo = transition.getTo().getLongitude();
-            Double AC = Math.abs(longitudeTo - longitudeFrom);
-            Double BC = Math.abs(latitudeTo - latitudeFrom);
-            Double cost = Math.sqrt(Math.pow(AC, 2) + Math.pow(BC, 2));
+            Double cost = latLongToKM(latitudeFrom, longitudeFrom, latitudeTo, longitudeTo);
             availablePoints.put(transition.getTo(), cost);
-
         }
         point.setAvailablePoints(availablePoints);
 
@@ -132,5 +120,16 @@ public class PointServiceImpl implements PointService {
                 point.getLongitude() != null &&
                 point.getStreet() != null &&
                 point.getType() != null;
+    }
+
+    private Double latLongToKM(Double lat1, Double lon1, Double lat2, Double lon2) {
+        Double R = 6378.137; // Radius of earth in KM
+        double dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+        double dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
     }
 }

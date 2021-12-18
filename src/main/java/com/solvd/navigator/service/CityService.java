@@ -1,9 +1,9 @@
 package com.solvd.navigator.service;
 
 import com.solvd.navigator.domain.City;
+import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 import com.solvd.navigator.domain.exception.InvalidParametersException;
 import com.solvd.navigator.domain.exception.ResourceNotFoundException;
-import com.solvd.navigator.domain.exception.EntityIsNotValidException;
 
 import java.util.List;
 

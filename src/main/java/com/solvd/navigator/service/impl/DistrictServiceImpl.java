@@ -75,7 +75,7 @@ public class DistrictServiceImpl implements DistrictService {
         if (!isValid(district)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "update", "district's object is not valid"));
         }
-        findById(district.getId()); // TODO Change way to check object in db
+        findById(district.getId());
         DISTRICT_REPOSITORY.update(district);
 
         for (Street street : district.getStreets()) {

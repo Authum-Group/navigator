@@ -72,6 +72,5 @@
                      resultMap="com.solvd.navigator.persistence.StreetRepository.StreetResultMap"/>
         <association property="type" column="type_id"
                      resultMap="com.solvd.navigator.persistence.PointTypeRepository.PointTypeResultMap"/>
-
     </resultMap>
 </mapper>

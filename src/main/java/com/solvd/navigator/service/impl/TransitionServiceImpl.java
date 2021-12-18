@@ -57,7 +57,7 @@ public class TransitionServiceImpl implements TransitionService {
         if (!isValid(transition)) {
             throw new EntityIsNotValidException(String.format(exceptionStub, "update", "transition's object is not valid"));
         }
-        findById(transition.getId()); // TODO Change way to check object in db
+        findById(transition.getId());
         TRANSITION_REPOSITORY.update(transition);
     }
 

@@ -48,5 +48,4 @@ public class CountryRepositoryMyBatisImpl implements CountryRepository {
             countryRepository.delete(country);
         }
     }
-
 }
